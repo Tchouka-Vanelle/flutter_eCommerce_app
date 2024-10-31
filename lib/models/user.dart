@@ -1,17 +1,15 @@
 class User {
-  final int userId;
-  final String email;
-  final String passWord;
-  final String tel;
+  String email;
+  String userName;
+  static User? currentUser;// to save the connected user
 
-  User({required this.userId, required this.passWord, required this.email, required this.tel});
+
+  User({required this.userName, required this.email});
 
   factory User.fromJson(Map<String, dynamic> jsonVal) {
     return User(
-      userId: jsonVal['id'],
-      email: jsonVal['email'].toString(),
-      passWord: jsonVal['username'].toString(),
-      tel: jsonVal['phone']
+      userName: jsonVal['username'],
+      email: jsonVal['email'],
     );
   }
 
