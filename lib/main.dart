@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_management/views/my_app_pages.dart';
 import 'views/login_view.dart';
 
 void main() {
@@ -20,11 +21,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/searchPage': (context) => Scaffold( 
-          appBar: AppBar(title: const Text('Search Page'),
-            automaticallyImplyLeading: true,),
-          body: const Text('Temporary page'),
-        )
+        '/pages': (context) => const MyAppPages()
       },
       home: const LoginView(),
     );

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:task_management/models/user.dart';
 import '../controllers/authentification.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -33,14 +32,16 @@ class _LoginViewState extends State<LoginView> {
 
     try {
       var user = await Authentification.login(email, password);
-
+      print('$user');
+      print('${user?.userName}');
+      print('${user?.email}');
       if(user != null) {
         //Check if the widget is still mounted before going to context
         if(!mounted) return; 
 
         User.currentUser = user;
         // redirection to search page
-        Navigator.pushReplacementNamed(context, '/searchPage');
+        Navigator.pushReplacementNamed(context, '/pages');
       }else {
         setState(() {
           _errorMessage = 'email or password incorrect';
@@ -56,31 +57,7 @@ class _LoginViewState extends State<LoginView> {
       });
     }
   }
-
-  //Method to manage the connexion with google
-  Future<void> _loginWithGoogle() async {
-    try {
-      GoogleSignIn _googleSignIn = GoogleSignIn();
-      final googleUser = await _googleSignIn.signIn();
-
-      if (googleUser != null){
-          User.currentUser = User( 
-            email: googleUser.email,
-            userName: googleUser.displayName ?? 'Google User'
-          );
-
-          if(!mounted) return;
-          Navigator.pushReplacementNamed(context, '/searchPage');
-      }
-
-    } catch(e) {
-      setState(() {
-        _errorMessage= 'Connection error with google! please try again!';
-      });
-    }
-  }
-
-
+  
   @override
   Widget build(BuildContext context) {
     
@@ -95,12 +72,14 @@ class _LoginViewState extends State<LoginView> {
             child: Column( 
               mainAxisAlignment: MainAxisAlignment.center,
               children: [ 
-                const Text('SIGN IN'),
+                const Icon(Icons.lock, size: 54),
                 const SizedBox(height: 40),
                 TextField( 
                   controller: _emailController,
+                   keyboardType: TextInputType.text,
                   decoration: const InputDecoration(
                     labelText: 'Email',
+                   
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(Icons.email),
                   ),
@@ -131,29 +110,13 @@ class _LoginViewState extends State<LoginView> {
                 ElevatedButton(
                   onPressed: _login,
                   child: const Text('Sign In'),
+                  style: ButtonStyle( 
+                    backgroundColor: MaterialStateProperty.all(const Color.fromARGB(201, 12, 144, 205)),
+                    foregroundColor: MaterialStateProperty.all(Colors.white),
+                  )
                 ),
                 
                 const SizedBox(height: 35),
-
-                const Text('Or Sign in with'),
-                const SizedBox(height: 10),
-                ElevatedButton( 
-                  onPressed: _loginWithGoogle,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    shape: RoundedRectangleBorder( 
-                      borderRadius: BorderRadius.circular(7)
-                    ),
-                    padding: const EdgeInsets.all(1),
-                    minimumSize: const Size(20, 20),
-                  ),
-                   child: Image.asset( 
-                    'assets/images/connexion/googleSignIn.jpeg',
-                    height: 14,
-                    width: 14
-
-                  ),
-                ),
 
                 if(_errorMessage.isNotEmpty)
                   Text( 
