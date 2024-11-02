@@ -32,9 +32,6 @@ class _LoginViewState extends State<LoginView> {
 
     try {
       var user = await Authentification.login(email, password);
-      print('$user');
-      print('${user?.userName}');
-      print('${user?.email}');
       if(user != null) {
         //Check if the widget is still mounted before going to context
         if(!mounted) return; 
@@ -105,15 +102,16 @@ class _LoginViewState extends State<LoginView> {
                       }
                     )
                   ),
+                  onSubmitted: (_) => _login(),
                 ),
                 const SizedBox(height: 40),
                 ElevatedButton(
                   onPressed: _login,
-                  child: const Text('Sign In'),
                   style: ButtonStyle( 
                     backgroundColor: MaterialStateProperty.all(const Color.fromARGB(201, 12, 144, 205)),
                     foregroundColor: MaterialStateProperty.all(Colors.white),
-                  )
+                  ),
+                  child: const Text('Sign In')
                 ),
                 
                 const SizedBox(height: 35),

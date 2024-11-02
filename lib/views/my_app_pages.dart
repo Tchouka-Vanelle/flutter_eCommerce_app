@@ -38,10 +38,6 @@ class _MyAppPagesState extends State<MyAppPages> {
   Widget build(BuildContext context) {
     
     return Scaffold(
-      appBar: AppBar(
-        title: Text(titles[page]),
-        automaticallyImplyLeading: true,
-      ),
       body: pages[page],
       bottomNavigationBar: NavbarApp(
         currentIndex: page, onTabSelected: onTabSelected),
