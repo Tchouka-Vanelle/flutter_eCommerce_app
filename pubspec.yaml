@@ -55,6 +55,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/connexion/googleSignIn.png
+    - assets/product_images/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
