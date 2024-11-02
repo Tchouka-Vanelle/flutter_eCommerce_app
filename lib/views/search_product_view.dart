@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:task_management/models/product.dart';
 import 'package:task_management/views/search_product_element/recent_searches_section.dart';
 import 'package:task_management/views/search_product_element/recommended_for_you_section.dart';
@@ -22,6 +23,7 @@ class _SearchProductViewState extends State<SearchProductView> {
     Product(description: 'description', price: 18.0, image: 'coat', id: 2, name: 'coat', nbrAchat: 15),
     Product(description: 'description', price: 14.0, image: 'robe', id: 3, name: 'robe', nbrAchat: 14),
     Product(description: 'description', price: 18.0, image: 'coat', id: 4, name: 'coat', nbrAchat: 11),
+    Product(description: 'description', price: 14.0, image: 'robe', id: 4, name: 'robe', nbrAchat: 7),
   ];
 
   void searchEntry(String searchValue) {
@@ -42,7 +44,14 @@ class _SearchProductViewState extends State<SearchProductView> {
           RecentSearchesSection(recentSearches: recentSearches),
           const SizedBox(height: 20),
           RecommendedForYouSection(recommendedForYou: recommendedForYou),
-          const SizedBox(height: 20),
+          Divider( 
+            color: Colors.grey[150],
+            thickness: 1,
+
+          ),
+          const SizedBox(height: 10),
+          
+
         ],
       ),
     );

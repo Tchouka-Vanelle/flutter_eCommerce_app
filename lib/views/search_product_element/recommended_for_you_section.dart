@@ -29,34 +29,35 @@ class RecommendedForYouSection extends StatelessWidget {
             padding: const EdgeInsets.only(left: 7),
             child: SizedBox(
               width: double.infinity,
-              child: Wrap( 
-                alignment: WrapAlignment.start,
-                spacing: 7, //espace horizontale
-                runSpacing: 5, // espace vertical
-                children: recommendedForYou.map((e) => (
+              child: SingleChildScrollView( 
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children:  recommendedForYou.map((e) => (
                     Container( 
                       padding: const EdgeInsets.all(7),
+                      margin: const EdgeInsets.all(7),
                       decoration: BoxDecoration( 
-                        color:  Colors.grey[300],
+                        color:  Colors.grey[100],
                         border: Border.all( 
-                          color: Colors.grey.shade600,
+                          color: Colors.grey.shade300,
                           width: 1.5,
                         ), 
                       ),
                       child: SizedBox(
-                        width: 100,
+                        width: 80,
                       child: Row(
                         
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [ 
                           Image(image: AssetImage('assets/product_images/${e.image}.png'),
-                                width: 40,  height: 40,),
+                                width: 30,  height: 30,),
                           const SizedBox(width: 4),
                           Text(e.name,)
                         ],
                       ))
                     )
                   )).toList(),
+                )
               )
             )
           )
