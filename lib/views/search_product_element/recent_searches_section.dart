@@ -41,7 +41,7 @@ class RecentSearchesSection extends StatelessWidget {
                     Container( 
                       padding: const EdgeInsets.all(7),
                       decoration: BoxDecoration( 
-                        color: Colors.grey[100],
+                        color: Colors.grey[200],
                         borderRadius: BorderRadius.circular(14)
                       ),
                       child: Text(e, style: const TextStyle(fontSize: 16)),
