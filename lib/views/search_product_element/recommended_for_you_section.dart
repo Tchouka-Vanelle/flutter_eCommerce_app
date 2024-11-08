@@ -36,7 +36,7 @@ class RecommendedForYouSection extends StatelessWidget {
                       padding: const EdgeInsets.all(7),
                       margin: const EdgeInsets.all(7),
                       decoration: BoxDecoration( 
-                        color:  Colors.grey[100],
+                        color:  Colors.grey[70],
                         border: Border.all( 
                           color: Colors.grey.shade300,
                           width: 1.5,

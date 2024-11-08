@@ -52,8 +52,9 @@ class _SearchProductViewState extends State<SearchProductView> {
           RecentSearchesSection(recentSearches: recentSearches),
           const SizedBox(height: 25),
           RecommendedForYouSection(recommendedForYou: recommendedForYou),
+          const SizedBox(height: 10),
           Divider( 
-            color: Colors.grey[150],
+            color: Colors.grey[110],
             thickness: 1,
 
           ),
