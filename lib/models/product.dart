@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 class Product {
   String name;
   double price;
@@ -5,8 +7,16 @@ class Product {
   int id;
   int nbrAchat;
   String image;
+  Category? category;
 
-  Product({required this.description, required this.price, required this.image,
-          required this.id, required this.name, required this.nbrAchat});
+  Product({
+    required this.name,
+    required this.price,
+    required this.description,
+    required this.id,
+    required this.nbrAchat,
+    required this.image,
+    this.category,
+  }) ;
 
 }

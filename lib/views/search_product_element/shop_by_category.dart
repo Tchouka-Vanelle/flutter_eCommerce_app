@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:task_management/models/product.dart';
+import 'package:task_management/models/category.dart';
 
-class RecommendedForYouSection extends StatelessWidget {
-  const RecommendedForYouSection({super.key, required this.recommendedForYou});
-  final List<Product> recommendedForYou;
+class ShopByCategory extends StatelessWidget {
+  const ShopByCategory({super.key, required this.shopByCategory});
+  final List<Category> shopByCategory;
+
 
   @override
   Widget build(BuildContext context) {
-    return  Column( 
+    
+     return Column( 
       mainAxisAlignment: MainAxisAlignment.start,
       children: [ 
           const Row(
              mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [ 
               Text( 
-                  'Recommended for you',
+                  'Shop by Category',
                   style: TextStyle( 
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -28,10 +30,11 @@ class RecommendedForYouSection extends StatelessWidget {
             padding: const EdgeInsets.only(left: 7),
             child: SizedBox(
               width: double.infinity,
-              child: SingleChildScrollView( 
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children:  recommendedForYou.map((e) => (
+              child: Wrap(
+                  runAlignment: WrapAlignment.start,
+                  spacing: 7, //space horizontal
+                  runSpacing: 5,
+                  children: shopByCategory.map((e) => (
                     Container( 
                       padding: const EdgeInsets.all(7),
                       margin: const EdgeInsets.all(7),
@@ -43,15 +46,15 @@ class RecommendedForYouSection extends StatelessWidget {
                         ), 
                       ),
                       child: SizedBox(
-                        height: 30,
+                        height: 40,
                         child: IntrinsicWidth(
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [ 
-                              Image(image: AssetImage('assets/product_images/${e.image}.png'),
-                                    width: 30,  height: 30,),
-                              const SizedBox(width: 4),
-                              Expanded(child: Text(e.name,))
+                              Image(image: AssetImage('assets/product_images/${e.photo}.png'),
+                                    width: 40,  height: 40,),
+                              const SizedBox(width: 7),
+                              Text(e.name,)
                             ],
                           )
                         )
@@ -61,8 +64,11 @@ class RecommendedForYouSection extends StatelessWidget {
                 )
               )
             )
-          )
       ],
     );
   }
 }
+
+
+
+
