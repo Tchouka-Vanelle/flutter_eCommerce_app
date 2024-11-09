@@ -78,8 +78,8 @@ Widget _buildCartIcon(IconData icon, int currentIndex, int index) {
             alignment: Alignment.center,
             width: 24,
             height: 24,
-            decoration: BoxDecoration( 
-              color: isSelected ? Colors.black :  Colors.black,
+            decoration: const BoxDecoration( 
+              color:  Colors.black,
               shape: BoxShape.circle,
             ),
           
