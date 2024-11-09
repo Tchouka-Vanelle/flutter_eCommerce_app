@@ -107,9 +107,9 @@ class _LoginViewState extends State<LoginView> {
                 const SizedBox(height: 40),
                 ElevatedButton(
                   onPressed: _login,
-                  style: ButtonStyle( 
-                    backgroundColor: MaterialStateProperty.all(const Color.fromARGB(201, 12, 144, 205)),
-                    foregroundColor: MaterialStateProperty.all(Colors.white),
+                  style: ElevatedButton.styleFrom( 
+                    backgroundColor: Colors.blue,
+                    foregroundColor: Colors.white,
                   ),
                   child: const Text('Sign In')
                 ),

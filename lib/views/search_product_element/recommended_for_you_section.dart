@@ -48,7 +48,7 @@ class RecommendedForYouSection extends StatelessWidget {
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [ 
-                              Image(image: AssetImage('assets/product_images/${e.image}.png'),
+                              Image(image: AssetImage('assets/product_images/${e.images[0]}.png'),
                                     width: 30,  height: 30,),
                               const SizedBox(width: 4),
                               Expanded(child: Text(e.name,))

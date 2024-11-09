@@ -14,7 +14,7 @@ class NavbarApp extends StatelessWidget {
 
         currentIndex: currentIndex,
         onTap: onTabSelected,
-        selectedItemColor: Colors.blue,
+        selectedItemColor: const Color.fromARGB(255, 17, 76, 125),
         selectedFontSize: 14,
         unselectedItemColor: Colors.black,
         showUnselectedLabels: true,
@@ -33,7 +33,7 @@ class NavbarApp extends StatelessWidget {
             label: 'Favorite',
           ),
           BottomNavigationBarItem( 
-            icon: _buildCircleIcon(Icons.shopping_cart, currentIndex, 3),
+            icon: _buildCartIcon(Icons.shopping_cart, currentIndex, 3),
             label: 'Cart',
           ),
           BottomNavigationBarItem( 
@@ -50,13 +50,47 @@ Widget _buildCircleIcon(IconData icon, int currentIndex, int index) {
   final isSelected = currentIndex == index;
   return Container(
     decoration: BoxDecoration(
-      color: isSelected ? Colors.blue.withOpacity(0.2) : const Color.fromARGB(255, 104, 99, 99), // Couleur du cercle en fond
+      color: isSelected ?const Color.fromARGB(255, 17, 76, 125)  : const Color.fromARGB(255, 104, 99, 99), // Couleur du cercle en fond
       shape: BoxShape.circle,
     ),
     padding: const EdgeInsets.all(4.0),
-    child: Icon(icon, color: isSelected ? Colors.blue : Colors.black), // Couleur de l'icône
+    child: Icon(icon, color: isSelected ? Colors.white: Colors.black), // Couleur de l'icône
   );
 }
+
+Widget _buildCartIcon(IconData icon, int currentIndex, int index) {
+  final isSelected = currentIndex == index;
+  return Stack(
+    clipBehavior: Clip.none, //allows the circle to sligthly overlap the icon
+    children: [ 
+        Container(
+          decoration: BoxDecoration(
+            color: isSelected ?  const Color.fromARGB(255, 17, 76, 125) : const Color.fromARGB(255, 104, 99, 99), // Couleur du cercle en fond
+            shape: BoxShape.circle,
+          ),
+          padding: const EdgeInsets.only(top: 10, right: 10, bottom: 4, left: 4), 
+          child: Icon(icon, color: isSelected ? Colors.white: Colors.black), // Couleur de l'icône
+        ),
+        Positioned( 
+          top: -4,
+          right: -4,
+          child: Container(  
+            alignment: Alignment.center,
+            width: 24,
+            height: 24,
+            decoration: BoxDecoration( 
+              color: isSelected ? Colors.black :  Colors.black,
+              shape: BoxShape.circle,
+            ),
+          
+            child: const Text('14', style: TextStyle(color: Colors.white),),
+            
+          )
+        )
+    ],
+  );
+}
+
 
 
 

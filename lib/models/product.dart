@@ -6,7 +6,7 @@ class Product {
   String description;
   int id;
   int nbrAchat;
-  String image;
+  List<String> images;
   Category? category;
 
   Product({
@@ -15,7 +15,7 @@ class Product {
     required this.description,
     required this.id,
     required this.nbrAchat,
-    required this.image,
+    required this.images,
     this.category,
   }) ;
 
