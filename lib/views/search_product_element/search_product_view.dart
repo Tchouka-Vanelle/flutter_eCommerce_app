@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:task_management/models/product.dart';
-import 'package:task_management/models/category.dart';
 import 'package:task_management/views/search_product_element/product_list.dart';
 import 'package:task_management/views/search_product_element/recent_searches_section.dart';
 import 'package:task_management/views/search_product_element/recommended_for_you_section.dart';
 import 'package:task_management/views/search_product_element/search_section.dart';
-import 'package:task_management/views/search_product_element/shop_by_category.dart';
 
 class SearchProductView extends StatefulWidget{
   const SearchProductView({super.key});
@@ -27,13 +25,6 @@ class _SearchProductViewState extends State<SearchProductView> {
     Product(description: 'description4 lolipop', price: 18.0, images: ['coat'], id: 4, name: 'pull', nbrAchat: 11),
     Product(description: 'description5', price: 14.0, images: ['robe'], id: 4, name: 'tshirt', nbrAchat: 7),
     Product(description: 'description6', price: 18.0, images: ['coat'], id: 2, name: 'jupe', nbrAchat: 7),
-  ];
-  List<Category> shopByCategory = [
-    Category(name: "category1", photo: "robe"),
-    Category(name: "category2", photo: "coat"),
-    Category(name: "category3", photo: "robe"),
-    Category(name: "category4", photo: "coat"),
-    Category(name: "category5", photo: "robe"),
   ];
 
   void searchEntry(String searchValue) {
@@ -63,8 +54,7 @@ class _SearchProductViewState extends State<SearchProductView> {
 
             ),
             const SizedBox(height: 10),
-            ShopByCategory(shopByCategory: shopByCategory),
-            const SizedBox(height: 25,),
+            
             ProductList(productList: recommendedForYou),
             const SizedBox(height: 25,),
           ],

@@ -1,51 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:task_management/models/product.dart';
-import 'package:task_management/views/show_product_details.dart';
 
-class RecommendedForYouSection extends StatelessWidget {
-  const RecommendedForYouSection({super.key, required this.recommendedForYou});
-  final List<Product> recommendedForYou;
+class HomeSectionFormat extends StatelessWidget {
+  const HomeSectionFormat({super.key, required this.value, required this.name});
+  final List<Product> value;
+  final String name;
 
   @override
   Widget build(BuildContext context) {
     return  Column( 
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children:  [ 
-          const Text( 
-            'Recommended for you',
-            style: TextStyle( 
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              
-            ),
+      children: [ 
+          Text( 
+              name,
+              style: const TextStyle( 
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
           ),
-             
+           
           const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.only(left: 7),
             child: SizedBox(
-              width: double.infinity,
-              child: SingleChildScrollView( 
+              height: 110,
+              child: GridView.builder(
                 scrollDirection: Axis.horizontal,
-                child: Row(
-                  children:  recommendedForYou.asMap().entries.map((pro) {
-
-                    Product e = pro.value;
-                    int index = pro.key;
-                    
-                    return GestureDetector(
-                      onTap: () {
-                        showDialog( 
-                          context: context,
-                          builder: (BuildContext context) {
-                            return  ShowProductDetails(product: e, index: index);
-                          },
-                        );
-                      },
-                      child: Container( 
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 8, //horizontal space
+                  mainAxisSpacing: 8 // vertical space
+                ),
+                itemCount: value.length,
+                itemBuilder: (context, index) {
+                  final e = value[index];
+                  print('Product name: ${e.name}');
+                  return Container( 
                       padding: const EdgeInsets.all(7),
-                      margin: const EdgeInsets.all(7),
                       decoration: BoxDecoration( 
                         color:  Colors.grey[70],
                         border: Border.all( 
@@ -62,15 +54,15 @@ class RecommendedForYouSection extends StatelessWidget {
                               Image(image: AssetImage('assets/product_images/${e.images[0]}.png'),
                                     width: 30,  height: 30,),
                               const SizedBox(width: 4),
-                              Expanded(child: Text(e.name,))
+                              Expanded(child: Text(e.name, maxLines: 1,))
                             ],
                           )
                         )
                       )
-                    ));
-                  }).toList(),
-                )
-              )
+                    );
+                }
+              ),
+               
             )
           )
       ],
