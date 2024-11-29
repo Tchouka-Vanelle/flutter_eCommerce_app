@@ -69,23 +69,23 @@ class _ShowProductDetailsState extends State<ShowProductDetails> {
                     
                       const SizedBox(height: 11,),
                     
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text( 
-                            widget.product.name, 
-                            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)
-                          ),
-                          Text(
-                            '\$${widget.product.price.toStringAsFixed(2)}',
-                            style: const TextStyle( 
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                              color: Colors.blue
-                            )
-                          ),
-                        ],
+                      Text( 
+                        widget.product.name, 
+                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                       ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child:  Text(
+                          '\$${widget.product.price.toStringAsFixed(2)}',
+                          textAlign: TextAlign.left,
+                          style: const TextStyle( 
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Colors.blue
+                          )
+                        ),
+                      ),
+                     
                       const SizedBox(height: 11,),
                       Text(
                         widget.product.description,

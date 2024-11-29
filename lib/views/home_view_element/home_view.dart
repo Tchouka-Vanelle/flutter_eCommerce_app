@@ -20,12 +20,13 @@ class _HomeViewState extends State<HomeView> {
     'High heels', 'T-Shirt', 'Light stick',
   ];
   List<Product> saisonalSuggestion = [
-    Product(description: 'description1 oi zkzks  n,kpq^dl qskdp jjjjjjjj kkkkkkk o nnkkk llll ppppp eeeee ttt y y m zz eer zzzz eedd eer zzz zzz ee eee pppp jjj hhhh fder', price: 14.0, images: ['robe', 'coat', 'robe', 'coat'], id: 1, name: 'robe', nbrAchat: 18),
+    Product(description: 'description0', price: 21.0, images: ['coat'], id: 7, name: 'culotte', nbrAchat: 27),
+    Product(description: 'description1 oi zkzks  n,kpq^dl qskdp jjjjjjjj kkkkkkk o nnkkk llll ppppp eeeee ttt y y m zz eer zzzz eedd eer zzz zzz ee eee pppp jjj hhhh fder', price: 19.0, images: ['robe', 'coat', 'robe', 'coat'], id: 1, name: 'robe', nbrAchat: 18),
     Product(description: 'description2', price: 18.0, images: ['coat'], id: 2, name: 'coat', nbrAchat: 15),
     Product(description: 'description3 kal lpzpz pp', price: 14.0, images: ['robe'], id: 3, name: 'pantalon', nbrAchat: 14),
     Product(description: 'description4 lolipop', price: 18.0, images: ['coat'], id: 4, name: 'pull', nbrAchat: 11),
-    Product(description: 'description5', price: 14.0, images: ['robe'], id: 4, name: 'tshirt', nbrAchat: 7),
-    Product(description: 'description6', price: 18.0, images: ['coat'], id: 2, name: 'jupe', nbrAchat: 7),
+    Product(description: 'description5', price: 14.0, images: ['robe'], id: 5, name: 'tshirt', nbrAchat: 7),
+    Product(description: 'description6', price: 18.0, images: ['coat'], id: 6, name: 'jupe', nbrAchat: 7),
   ];
     List<Product> bestSelling = [
     Product(description: 'description1 oi zkzks  n,kpq^dl qskdp jjjjjjjj kkkkkkk o nnkkk llll ppppp eeeee ttt y y m zz eer zzzz eedd eer zzz zzz ee eee pppp jjj hhhh fder', price: 14.0, images: ['robe', 'coat', 'robe', 'coat'], id: 1, name: 'robe', nbrAchat: 18),
@@ -74,7 +75,7 @@ class _HomeViewState extends State<HomeView> {
             const SizedBox(height: 20),
             RecentlyConsultedSection(recentlyConsulted: recentlyConsulted),
             const SizedBox(height: 25),
-            
+
             HomeSectionFormat(value: saisonalSuggestion, name : "Saisonal Suggestion"),
             const SizedBox(height: 10),
             Divider( 

@@ -62,7 +62,7 @@ class RecommendedForYouSection extends StatelessWidget {
                               Image(image: AssetImage('assets/product_images/${e.images[0]}.png'),
                                     width: 30,  height: 30,),
                               const SizedBox(width: 4),
-                              Expanded(child: Text(e.name,))
+                              Text(e.name,)
                             ],
                           )
                         )

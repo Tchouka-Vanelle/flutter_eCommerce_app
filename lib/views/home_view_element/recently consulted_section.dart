@@ -10,24 +10,16 @@ class RecentlyConsultedSection extends StatelessWidget {
     
     return  Column( 
       mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [ 
-          Row(
-             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [ 
-              const Text( 
-                    'Recently Consulted',
-                    style: TextStyle( 
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+          const Text( 
+                'Recently Consulted',
+                style: TextStyle( 
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
-              IconButton(
-                  onPressed: (){}, 
-                  icon: const Icon(Icons.delete),
-                  color: const Color.fromARGB(255, 26, 45, 91),
-                )
-            ],
           ),
+             
           const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.only(left: 7),

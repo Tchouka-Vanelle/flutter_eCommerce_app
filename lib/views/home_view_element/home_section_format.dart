@@ -8,6 +8,9 @@ class HomeSectionFormat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    
+
     return  Column( 
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -23,49 +26,44 @@ class HomeSectionFormat extends StatelessWidget {
           const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.only(left: 7),
-            child: SizedBox(
-              height: 110,
-              child: GridView.builder(
+            
+              child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 8, //horizontal space
-                  mainAxisSpacing: 8 // vertical space
-                ),
-                itemCount: value.length,
-                itemBuilder: (context, index) {
-                  final e = value[index];
-                  print('Product name: ${e.name}');
-                  return Container( 
-                      padding: const EdgeInsets.all(7),
-                      decoration: BoxDecoration( 
-                        color:  Colors.grey[70],
-                        border: Border.all( 
-                          color: Colors.grey.shade300,
-                          width: 1.5,
-                        ), 
-                      ),
-                      child: SizedBox(
-                        height: 30,
-                        child: IntrinsicWidth(
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [ 
-                              Image(image: AssetImage('assets/product_images/${e.images[0]}.png'),
-                                    width: 30,  height: 30,),
-                              const SizedBox(width: 4),
-                              Expanded(child: Text(e.name, maxLines: 1,))
-                            ],
+                child: Wrap(
+                    spacing: 8, // horizontal space
+                    runSpacing: 8, //vertical space
+                    children: value.map((e) {
+                        return Container( 
+                        padding: const EdgeInsets.all(7),
+                        decoration: BoxDecoration( 
+                          color:  Colors.grey[70],
+                          border: Border.all( 
+                            color: Colors.grey.shade300,
+                            width: 1.5,
+                          ), 
+                        ),
+                        child: SizedBox(
+                          height: 30,
+                          child: IntrinsicWidth(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [ 
+                                Image(image: AssetImage('assets/product_images/${e.images[0]}.png'),
+                                      width: 30,  height: 30,),
+                                const SizedBox(width: 4),
+                                Text(e.name,),
+                              ],
+                            )
                           )
                         )
-                      )
-                    );
-                }
-              ),
-               
+                      );
+                    }).toList(),
+                )
+                
             )
           )
       ],
+      
     );
   }
 }
