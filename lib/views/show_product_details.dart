@@ -103,7 +103,7 @@ class _ShowProductDetailsState extends State<ShowProductDetails> {
                             backgroundColor: Colors.blue,
                             foregroundColor: Colors.black,
                           ),
-                          child: const Text('Add to cart')
+                          child: const Text('ADD TO CART')
                         ),
                       )
                   ]

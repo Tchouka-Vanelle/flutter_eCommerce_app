@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:task_management/views/cart_view.dart';
-import 'package:task_management/views/favorite_view.dart';
+import 'package:task_management/views/cart_view_element/cart_view.dart';
+import 'package:task_management/views/favorite_view_element/favorite_view.dart';
 import 'package:task_management/views/home_view_element/home_view.dart';
 import 'package:task_management/views/login_view.dart';
 import 'package:task_management/views/nav_bar_app.dart';
@@ -19,12 +19,12 @@ class _MyAppPagesState extends State<MyAppPages> {
   void onTabSelected(int val) => setState(() {page = val;});
 
   //  list of pages
-  final List<Widget> pages = const [
-    HomeView(),
-    SearchProductView(),
+  final List<Widget> pages =  [
+    const HomeView(),
+    const SearchProductView(),
     FavoriteView(),
     CartView(),
-    LoginView()
+    const LoginView()
   ];
   final List<String> titles = const [
     'Home',
