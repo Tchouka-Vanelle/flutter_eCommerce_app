@@ -36,7 +36,7 @@ class _ProductToBuyState extends State<ProductToBuy> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children:  [ 
           const Text( 
-            'Recommended for you',
+            'Cart',
             style: TextStyle( 
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -49,88 +49,113 @@ class _ProductToBuyState extends State<ProductToBuy> {
             padding: const EdgeInsets.only(left: 7),
             child: SizedBox(
               width: double.infinity,
-              child: SingleChildScrollView( 
-                scrollDirection: Axis.horizontal,
-                child: Column(
+              child: Column(
                   
-                  children:[ ListView.builder(
+                  children:[ 
+                    ListView.builder(
+                    shrinkWrap: true, // s'adapte à la taille du contenu
+                    physics: const NeverScrollableScrollPhysics(), // désactive le défilement interne
                     itemCount: widget.productToBuy.length,
                     itemBuilder: (context, index) {
+                      debugPrint('Building item at index $index: ${widget.productToBuy[index].name}');
                       return 
-                          Card(
+                        Card(
                           margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                          child: ListTile(
-                            leading: Checkbox(
-                              value: _isChecked[index], 
-                              onChanged: (bool? val){
-                                setState(() {
-                                  _isChecked[index]=val ?? false;
-                                });
-                              }
-                            ),
-                            title: Text(widget.productToBuy[index].name, style: const TextStyle(fontSize: 12),),
-                            subtitle: Text('Price: \$${widget.productToBuy[index].price.toStringAsFixed(2)}'),
-                            trailing: GestureDetector(
-                              onTap: () {
-                                showDialog( 
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return  ShowProductDetails(product: widget.productToBuy[index], index: index);
+                          child: SizedBox(
+                            height: 80,
+                            child: ListTile(
+                              leading: SizedBox( 
+                                width: 30,
+                                child: Checkbox(
+                                  value: _isChecked[index], 
+                                  onChanged: (bool? val){
+                                    setState(() {
+                                      _isChecked[index]=val ?? false;
+                                      debugPrint('_isChecked[$index] updated to ${_isChecked[index]}');
+                                    });
+                                  }
+                                ),
+                              ),
+                              title:Text(widget.productToBuy[index].name, 
+                                    style: const TextStyle(fontSize: 17),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,),
+                              subtitle: Text('Price: \$${widget.productToBuy[index].price.toStringAsFixed(2)}',
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(fontSize: 18),
+                                        maxLines: 1,),
+                              trailing: SizedBox(
+                                width: 240,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    debugPrint('Tapped on product details for ${widget.productToBuy[index].name}');
+                                    showDialog( 
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return  ShowProductDetails(product: widget.productToBuy[index], index: index);
+                                      },
+                                    );
                                   },
-                                );
-                              },
-                              child: Row(
-                                children: [
-                                  Container( 
-                                    padding: const EdgeInsets.all(7),
-                                    margin: const EdgeInsets.all(7),
-                                    decoration: BoxDecoration( 
-                                      color:  Colors.grey[70],
-                                      border: Border.all( 
-                                        color: Colors.grey.shade300,
-                                        width: 1.5,
-                                      ), 
-                                    ),
-                                    child: SizedBox(
-                                      height: 30,
-                                      child: IntrinsicWidth(
-                                        child: Row(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: [ 
-                                            Image(image: AssetImage('assets/product_images/${widget.productToBuy[index].images[0]}.png'),
-                                                  width: 30,  height: 30,),
-                                            const SizedBox(width: 4),
-                                            Text(widget.productToBuy[index].name,)
-                                          ],
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Container( 
+                                        padding: const EdgeInsets.all(7),
+                                        margin: const EdgeInsets.all(7),
+                                        decoration: BoxDecoration( 
+                                          color:  Colors.grey[70],
+                                          border: Border.all( 
+                                            color: Colors.grey.shade300,
+                                            width: 1.5,
+                                          ), 
+                                        ),
+                                        child: SizedBox(
+                                          height: double.infinity,
+                                          child: Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [ 
+                                              Image(image: AssetImage('assets/product_images/${widget.productToBuy[index].images[0]}.png'),
+                                                    width: 100,  height: 100,),
+                                            ],
+                                          )
                                         )
-                                      )
-                                    )
-                                  ),
-                                  IconButton(
-                                    onPressed: (){
-                                      setState(() {
-                                        if(_quantity[index] > 1) {
-                                          _quantity[index]--;
-                                        }else{
-                                          widget.productToBuy.removeAt(index);
-                                        }
-                                      });
-                                    }, 
-                                    icon: const Icon(Icons.remove)
-                                  ),
-                                  Text(_quantity[index].toString()),
-                                  IconButton(
-                                    onPressed: (){
-                                      setState(() {
-                                          _quantity[index]++;
-                                      });
-                                    }, 
-                                    icon: const Icon(Icons.add)
+                                      ),
+                                      SizedBox(
+                                        width: 100,
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          children: [
+                                            IconButton(
+                                              onPressed: (){
+                                                setState(() {
+                                                  if(_quantity[index] > 1) {
+                                                    _quantity[index]--;
+                                                  }else{
+                                                    widget.productToBuy.removeAt(index);
+                                                  }
+                                                });
+                                              }, 
+                                              icon: const Icon(Icons.remove)
+                                            ),
+                                            Text(_quantity[index].toString()),
+                                            IconButton(
+                                              onPressed: (){
+                                                setState(() {
+                                                    _quantity[index]++;
+                                                });
+                                              }, 
+                                              icon: const Icon(Icons.add)
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                              
+                                    ],
                                   )
-                                ],
+                                ),
                               )
-                            )
-                  
+                                              
+                            ),
                           ),
                           
                           );
@@ -147,7 +172,8 @@ class _ProductToBuyState extends State<ProductToBuy> {
                           const Text('Total:', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold )),
                           Text('\$${_totalPrice.toStringAsFixed(2)}',
                               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)
-                        ]),
+                        ]
+                      ),
                       const SizedBox(height: 14,),
                       ElevatedButton(
                         onPressed: _totalPrice > 0 ? () => showPaymentPopup(context) : null, 
@@ -169,8 +195,7 @@ class _ProductToBuyState extends State<ProductToBuy> {
                   
                 )
               )
-            )
-          
+            
       ],
     );
   }
