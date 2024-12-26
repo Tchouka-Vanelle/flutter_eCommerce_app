@@ -32,7 +32,7 @@ class _ShowProductDetailsState extends State<ShowProductDetails> {
                 padding: const EdgeInsets.only(right: 14),
                 scrollDirection: Axis.vertical,
                   child: Column( 
-                    mainAxisSize: MainAxisSize.min,
+                    mainAxisSize: MainAxisSize.min, // only use the necessary space
                     children: [ 
                       Align(
                         alignment: Alignment.centerRight,

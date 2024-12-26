@@ -176,7 +176,14 @@ class _ProductToBuyState extends State<ProductToBuy> {
                       ),
                       const SizedBox(height: 14,),
                       ElevatedButton(
-                        onPressed: _totalPrice > 0 ? () => showPaymentPopup(context) : null, 
+                        onPressed: _totalPrice > 0 ? (){
+                          showDialog( 
+                            context: context,
+                            builder: (BuildContext context) {
+                              return  const ShowPaymentPopup();
+                            },
+                          );
+                        } : null, 
                         style: ElevatedButton.styleFrom(
                             shape: const RoundedRectangleBorder( 
                               borderRadius: BorderRadius.zero
