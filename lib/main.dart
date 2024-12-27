@@ -24,6 +24,7 @@ void main() async{
       ]);
     }
 
+debugPrint('Après déconnexion : isLoggedIn = ${session.isLoggedIn}');
   runApp(MyApp(isLoggedIn: session.isLoggedIn));
 }
 
@@ -46,7 +47,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/pages': (context) => const MyAppPages()
       },
-      home: isLoggedIn != false ?  const MyAppPages() : const LoginView(),
+      home: isLoggedIn == true ?  const MyAppPages() : const LoginView(),
     );
   }
 }

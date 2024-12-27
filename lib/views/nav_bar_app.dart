@@ -36,10 +36,6 @@ class NavbarApp extends StatelessWidget {
             icon: _buildCartIcon(Icons.shopping_cart, currentIndex, 3),
             label: 'Cart',
           ),
-          BottomNavigationBarItem( 
-            icon: _buildCircleIcon(Icons.people, currentIndex, 4),
-            label: 'Login',
-          ),
         ],
     );
   }
