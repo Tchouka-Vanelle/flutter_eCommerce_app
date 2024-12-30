@@ -1,15 +1,61 @@
 import 'package:flutter/material.dart';
 import 'package:task_management/models/product.dart';
+import 'package:task_management/models/user_session.dart';
 import 'package:task_management/views/show_product_details.dart';
 
 
-class ProductList extends StatelessWidget {
+class ProductList extends StatefulWidget {
 
   const ProductList({super.key, required this.productList});
   final List<Product> productList;
 
   @override
+  State<ProductList> createState() => _ProductListState();
+}
+
+class _ProductListState extends State<ProductList> {
+
+  late ValueNotifier<List<Product>> _favoriteProductsNotifier = ValueNotifier([]);
+  bool _isLoaded = false;
+
+
+  @override
+  void initState() {
+    super.initState();
+    _loadFavorites();
+  }
+
+  void _loadFavorites() async{
+     final session = await UserSession.instance;
+      _favoriteProductsNotifier = ValueNotifier<List<Product>>(session.favItems);
+      setState(() {
+        _isLoaded = true;
+      });
+  }
+
+
+  void _toggleFavorite(Product product) async {
+    final session = await UserSession.instance;
+
+     if (_favoriteProductsNotifier.value.contains(product)) {
+      _favoriteProductsNotifier.value =
+          List.from(_favoriteProductsNotifier.value)..remove(product);
+    } else {
+      _favoriteProductsNotifier.value =
+          List.from(_favoriteProductsNotifier.value)..add(product);
+    }
+
+    session.setFavItems(_favoriteProductsNotifier.value);
+
+  }
+
+
+  @override
   Widget build(BuildContext context) {
+
+    if (!_isLoaded) {
+    return const Center(child: CircularProgressIndicator());
+    }
     return Column( 
       mainAxisAlignment: MainAxisAlignment.start,
       children: [ 
@@ -23,7 +69,6 @@ class ProductList extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
               ),
-             
             ],
           ),
           const SizedBox(height: 10),
@@ -35,21 +80,11 @@ class ProductList extends StatelessWidget {
                   runAlignment: WrapAlignment.start,
                   spacing: 7, //space horizontal
                   runSpacing: 5,
-                  children: productList.asMap().entries.map((entry) {
+                  children: widget.productList.asMap().entries.map((entry) {
                     
                     Product e = entry.value;
-                    int index = entry.key;
 
-                    return GestureDetector(
-                      onTap: () {
-                        showDialog( 
-                          context: context,
-                          builder: (BuildContext context) {
-                            return  ShowProductDetails(product: e, index: index);
-                          },
-                        );
-                      },
-                      child:  Container( 
+                    return  Container( 
                         padding: const EdgeInsets.all(7),
                         margin: const EdgeInsets.all(7),
                         decoration: BoxDecoration( 
@@ -68,16 +103,34 @@ class ProductList extends StatelessWidget {
                                   alignment: Alignment.centerRight,
                                   child: Padding(
                                     padding: const EdgeInsets.all(3),
-                                    child: Icon( 
-                                      index % 2 == 0 ? Icons.favorite_border : Icons.favorite,
-                                      color: Colors.black
+                                    child:  ValueListenableBuilder<List<Product>>(
+                                      valueListenable: _favoriteProductsNotifier,
+                                      builder: (context, favoriteProducts, child) {
+                                        return
+                                            IconButton( 
+                                              icon: Icon( 
+                                                favoriteProducts.contains(e) ? Icons.favorite : Icons.favorite_border ,
+                                                color: Colors.black),
+                                              onPressed: () => _toggleFavorite(e)
+                                            );
+                                      }
                                     )
                                   )
                                 ),
-                                Image(
+                                GestureDetector(
+                                  onTap: () {
+                                    showDialog( 
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return  ShowProductDetails(product: e);
+                                      },
+                                    );
+                                  },
+                                  child:  Image(
                                       image: AssetImage('assets/product_images/${e.images[0]}.png'),
                                       width: 100,  height: 100,
                                     ),
+                                ),
                                 const SizedBox(height: 2),
                               
                                 Text('\$${e.price.toStringAsFixed(2)}', style: const TextStyle(fontWeight: FontWeight.bold),),
@@ -106,8 +159,7 @@ class ProductList extends StatelessWidget {
                             
                           )
                         )
-                      )
-                    );
+                      );
                   }).toList(),
                 )
               )

@@ -54,7 +54,8 @@ class _LoginViewState extends State<LoginView> {
         var favItems =  [
         Product(description: 'description1 oi zkzks  n,kpq^dl qskdp jjjjjjjj kkkkkkk o nnkkk llll ppppp eeeee ttt y y m zz eer zzzz eedd eer zzz zzz ee eee pppp jjj hhhh fder', price: 14.0, images: ['robe', 'coat', 'robe', 'coat'], id: 1, name: 'robe', nbrAchat: 18),
         Product(description: 'description2', price: 18.5, images: ['coat'], id: 2, name: 'coattttttttttttttttttttttttttttt tttttttttt', nbrAchat: 15),
-        Product(description: 'description3 kal lpzpz pp', price: 27.0, images: ['robe'], id: 3, name: 'pantalon', nbrAchat: 14),];
+        Product(description: 'description5', price: 33.0, images: ['robe'], id: 4, name: 'tshirt', nbrAchat: 7)
+        ];
 
         session.setCartItems(cartItems);
         session.setFavItems(favItems);

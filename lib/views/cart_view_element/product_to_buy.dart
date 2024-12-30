@@ -92,7 +92,7 @@ class _ProductToBuyState extends State<ProductToBuy> {
                                     showDialog( 
                                       context: context,
                                       builder: (BuildContext context) {
-                                        return  ShowProductDetails(product: widget.productToBuy[index], index: index);
+                                        return  ShowProductDetails(product: widget.productToBuy[index]);
                                       },
                                     );
                                   },

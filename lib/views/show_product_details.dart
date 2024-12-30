@@ -1,21 +1,63 @@
 
 import 'package:flutter/material.dart';
 import 'package:task_management/models/product.dart';
+import 'package:task_management/models/user_session.dart';
 
 class ShowProductDetails extends StatefulWidget {
 
-  const ShowProductDetails({super.key, required this.product, required this.index});
+  const ShowProductDetails({super.key, required this.product});
 
-  final Product product; final int index;
+  final Product product;
   @override
   State<ShowProductDetails> createState() => _ShowProductDetailsState();
 }
 
 class _ShowProductDetailsState extends State<ShowProductDetails> {
  int photo = 0;
-    @override
-      Widget build(BuildContext context) {
-   
+
+
+  
+  late ValueNotifier<List<Product>> _favoriteProductsNotifier = ValueNotifier([]);
+  bool _isLoaded = false;
+
+
+  @override
+  void initState() {
+    super.initState();
+    _loadFavorites();
+  }
+
+  void _loadFavorites() async{
+     final session = await UserSession.instance;
+      _favoriteProductsNotifier = ValueNotifier<List<Product>>(session.favItems);
+      setState(() {
+        _isLoaded = true;
+      });
+  }
+
+
+  void _toggleFavorite(Product product) async {
+    final session = await UserSession.instance;
+
+     if (_favoriteProductsNotifier.value.contains(product)) {
+      _favoriteProductsNotifier.value =
+          List.from(_favoriteProductsNotifier.value)..remove(product);
+    } else {
+      _favoriteProductsNotifier.value =
+          List.from(_favoriteProductsNotifier.value)..add(product);
+    }
+
+    session.setFavItems(_favoriteProductsNotifier.value);
+
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+
+    if (!_isLoaded) {
+    return const Center(child: CircularProgressIndicator());
+    }
         return AlertDialog( 
             
             contentPadding:  const EdgeInsets.all(16),
@@ -36,10 +78,18 @@ class _ShowProductDetailsState extends State<ShowProductDetails> {
                     children: [ 
                       Align(
                         alignment: Alignment.centerRight,
-                        child: Icon( 
-                          widget.index % 2 == 0 ? Icons.favorite_border : Icons.favorite,
-                          color: Colors.black
-                        )
+                        child:  ValueListenableBuilder<List<Product>>(
+                                      valueListenable: _favoriteProductsNotifier,
+                                      builder: (context, favoriteProducts, child) {
+                                        return
+                                            IconButton( 
+                                              icon: Icon( 
+                                                favoriteProducts.contains(widget.product) ? Icons.favorite : Icons.favorite_border ,
+                                                color: Colors.black),
+                                              onPressed: () => _toggleFavorite(widget.product)
+                                            );
+                                      }
+                                    )
                       ),
                       Row( 
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

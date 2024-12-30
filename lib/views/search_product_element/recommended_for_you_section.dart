@@ -32,18 +32,8 @@ class RecommendedForYouSection extends StatelessWidget {
                   children:  recommendedForYou.asMap().entries.map((pro) {
 
                     Product e = pro.value;
-                    int index = pro.key;
                     
-                    return GestureDetector(
-                      onTap: () {
-                        showDialog( 
-                          context: context,
-                          builder: (BuildContext context) {
-                            return  ShowProductDetails(product: e, index: index);
-                          },
-                        );
-                      },
-                      child: Container( 
+                    return Container( 
                       padding: const EdgeInsets.all(7),
                       margin: const EdgeInsets.all(7),
                       decoration: BoxDecoration( 
@@ -59,15 +49,25 @@ class RecommendedForYouSection extends StatelessWidget {
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [ 
-                              Image(image: AssetImage('assets/product_images/${e.images[0]}.png'),
+                              GestureDetector(
+                                onTap: () {
+                                  showDialog( 
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return  ShowProductDetails(product: e);
+                                    },
+                                  );
+                                },
+                                child: Image(image: AssetImage('assets/product_images/${e.images[0]}.png'),
                                     width: 30,  height: 30,),
+                              ),
                               const SizedBox(width: 4),
                               Text(e.name,)
                             ],
                           )
                         )
                       )
-                    ));
+                    );
                   }).toList(),
                 )
               )

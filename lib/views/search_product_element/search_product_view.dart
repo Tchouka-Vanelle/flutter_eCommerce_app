@@ -19,12 +19,12 @@ class _SearchProductViewState extends State<SearchProductView> {
     'High heels', 'T-Shirt', 'Light stick',
   ];
   List<Product> recommendedForYou = [
-    Product(description: 'description1 oi zkzks  n,kpq^dl qskdp jjjjjjjj kkkkkkk o nnkkk llll ppppp eeeee ttt y y m zz eer zzzz eedd eer zzz zzz ee eee pppp jjj hhhh fder', price: 14.0, images: ['robe', 'coat', 'robe', 'coat'], id: 1, name: 'robe', nbrAchat: 18),
-    Product(description: 'description2', price: 18.0, images: ['coat'], id: 2, name: 'coattttttttttttttttttttttttttttt tttttttttt', nbrAchat: 15),
-    Product(description: 'description3 kal lpzpz pp', price: 14.0, images: ['robe'], id: 3, name: 'pantalon', nbrAchat: 14),
-    Product(description: 'description4 lolipop', price: 18.0, images: ['coat'], id: 4, name: 'pull', nbrAchat: 11),
-    Product(description: 'description5', price: 14.0, images: ['robe'], id: 4, name: 'tshirt', nbrAchat: 7),
-    Product(description: 'description6', price: 18.0, images: ['coat'], id: 2, name: 'jupe', nbrAchat: 7),
+    Product(id: 1, description: 'description1 oi zkzks  n,kpq^dl qskdp jjjjjjjj kkkkkkk o nnkkk llll ppppp eeeee ttt y y m zz eer zzzz eedd eer zzz zzz ee eee pppp jjj hhhh fder', price: 14.0, images: ['robe', 'coat', 'robe', 'coat'], name: 'robe', nbrAchat: 18),
+    Product(id: 2, description: 'description2', price: 18.0, images: ['coat'], name: 'coattttttttttttttttttttttttttttt tttttttttt', nbrAchat: 15),
+    Product(id: 3, description: 'description3 kal lpzpz pp', price: 24.0, images: ['robe'], name: 'pantalon', nbrAchat: 14),
+    Product(id: 4, description: 'description4 lolipop', price: 29.0, images: ['coat'],  name: 'pull', nbrAchat: 11),
+    Product(id: 5, description: 'description5', price: 33.0, images: ['robe'], name: 'tshirt', nbrAchat: 7),
+    Product(id: 6, description: 'description6', price: 41.0, images: ['coat'], name: 'jupe', nbrAchat: 7),
   ];
 
   void searchEntry(String searchValue) {
@@ -36,30 +36,36 @@ class _SearchProductViewState extends State<SearchProductView> {
     
     return Padding( 
       padding: const EdgeInsets.all(7),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
+      
         child: Column( 
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Row(),
             SearchSection(searchEntry: searchEntry),
             const SizedBox(height: 20),
-            RecentSearchesSection(recentSearches: recentSearches),
-            const SizedBox(height: 25),
-            RecommendedForYouSection(recommendedForYou: recommendedForYou),
-            const SizedBox(height: 10),
-            Divider( 
-              color: Colors.grey[110],
-              thickness: 1,
-
-            ),
-            const SizedBox(height: 10),
-            
-            ProductList(productList: recommendedForYou),
-            const SizedBox(height: 25,),
+            Expanded(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+              
+                child: Column(children: [
+                  RecentSearchesSection(recentSearches: recentSearches),
+                  const SizedBox(height: 25),
+                  RecommendedForYouSection(recommendedForYou: recommendedForYou),
+                  const SizedBox(height: 10),
+                  Divider( 
+                    color: Colors.grey[110],
+                    thickness: 1,
+              
+                  ),
+                  const SizedBox(height: 10),
+                  
+                  ProductList(productList: recommendedForYou),
+                  const SizedBox(height: 25,),
+                ],)
+              ),
+            )
           ],
         ),
-      )
     );
   }
 }
