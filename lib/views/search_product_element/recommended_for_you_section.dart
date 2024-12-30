@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:task_management/models/product.dart';
-import 'package:task_management/views/show_product_details.dart';
+import 'package:task_management/utils/show_product_details.dart';
 
 class RecommendedForYouSection extends StatelessWidget {
   const RecommendedForYouSection({super.key, required this.recommendedForYou});

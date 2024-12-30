@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:task_management/models/product.dart';
 import 'package:task_management/models/user_session.dart';
-import 'package:task_management/views/my_app_pages.dart';
+import 'package:task_management/utils/my_app_pages.dart';
 import 'views/profil_view_element/login_view.dart';
 
 void main() async{

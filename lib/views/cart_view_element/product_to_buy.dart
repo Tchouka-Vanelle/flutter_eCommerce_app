@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:task_management/models/product.dart';
 import 'package:task_management/views/cart_view_element/show_payment_popup.dart';
-import 'package:task_management/views/show_product_details.dart';
+import 'package:task_management/utils/show_product_details.dart';
 
 class ProductToBuy extends StatefulWidget {
   const ProductToBuy({super.key, required this.productToBuy});

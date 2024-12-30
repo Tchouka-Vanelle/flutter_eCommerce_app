@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:task_management/models/product.dart';
 import 'package:task_management/models/user_session.dart';
-import 'package:task_management/views/show_product_details.dart';
+import 'package:task_management/utils/show_product_details.dart';
 
 
 class FavoriteView extends StatefulWidget {
