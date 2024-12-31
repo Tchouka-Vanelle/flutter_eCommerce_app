@@ -1,7 +1,8 @@
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:task_management/models/product.dart';
-import 'package:task_management/models/user_session.dart';
+import 'package:task_management/utils/shop_provider.dart';
 
 class ShowProductDetails extends StatefulWidget {
 
@@ -15,50 +16,10 @@ class ShowProductDetails extends StatefulWidget {
 class _ShowProductDetailsState extends State<ShowProductDetails> {
  int photo = 0;
 
-
-  
-  late ValueNotifier<List<Product>> _favoriteProductsNotifier = ValueNotifier([]);
-  bool _isLoaded = false;
-
-
-  @override
-  void initState() {
-    super.initState();
-    _loadFavorites();
-  }
-
-  void _loadFavorites() async{
-     final session = await UserSession.instance;
-      _favoriteProductsNotifier = ValueNotifier<List<Product>>(session.favItems);
-      setState(() {
-        _isLoaded = true;
-      });
-  }
-
-
-  void _toggleFavorite(Product product) async {
-    final session = await UserSession.instance;
-
-     if (_favoriteProductsNotifier.value.contains(product)) {
-      _favoriteProductsNotifier.value =
-          List.from(_favoriteProductsNotifier.value)..remove(product);
-    } else {
-      _favoriteProductsNotifier.value =
-          List.from(_favoriteProductsNotifier.value)..add(product);
-    }
-
-    session.setFavItems(_favoriteProductsNotifier.value);
-
-  }
-
-
   @override
   Widget build(BuildContext context) {
 
-    if (!_isLoaded) {
-    return const Center(child: CircularProgressIndicator());
-    }
-        return AlertDialog( 
+    return AlertDialog( 
             
             contentPadding:  const EdgeInsets.all(16),
             shape: RoundedRectangleBorder( 
@@ -70,27 +31,23 @@ class _ShowProductDetailsState extends State<ShowProductDetails> {
                   maxHeight: 300,
                   maxWidth: 300,
                 ),
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.only(right: 14),
-                scrollDirection: Axis.vertical,
-                  child: Column( 
-                    mainAxisSize: MainAxisSize.min, // only use the necessary space
-                    children: [ 
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child:  ValueListenableBuilder<List<Product>>(
-                                      valueListenable: _favoriteProductsNotifier,
-                                      builder: (context, favoriteProducts, child) {
-                                        return
-                                            IconButton( 
-                                              icon: Icon( 
-                                                favoriteProducts.contains(widget.product) ? Icons.favorite : Icons.favorite_border ,
-                                                color: Colors.black),
-                                              onPressed: () => _toggleFavorite(widget.product)
-                                            );
-                                      }
-                                    )
-                      ),
+              child: Consumer<ShopProvider>(
+                builder: (context, shopProvider, child) {
+                return SingleChildScrollView(
+                  padding: const EdgeInsets.only(right: 14),
+                  scrollDirection: Axis.vertical,
+                    child: Column( 
+                      mainAxisSize: MainAxisSize.min, // only use the necessary space
+                      children: [ 
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: IconButton( 
+                            icon: Icon( 
+                              shopProvider.favItems.contains(widget.product) ? Icons.favorite : Icons.favorite_border ,
+                              color: Colors.black),
+                            onPressed: () => shopProvider.toggleFavorite(widget.product)
+                          )
+                        ),
                       Row( 
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [ 
@@ -142,23 +99,38 @@ class _ShowProductDetailsState extends State<ShowProductDetails> {
                         textAlign: TextAlign.left,
                       ),
                       const SizedBox(height: 21,),
-                      Align(
-                        alignment: Alignment.center,
-                        child:  ElevatedButton(
-                          onPressed: () {Navigator.of(context).pop();}, 
-                          style: ElevatedButton.styleFrom(
-                            shape: const RoundedRectangleBorder( 
-                              borderRadius: BorderRadius.zero
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {Navigator.of(context).pop();}, 
+                            style: ElevatedButton.styleFrom(
+                              shape: const RoundedRectangleBorder( 
+                                borderRadius: BorderRadius.zero
+                              ),
+                              backgroundColor: Colors.red,
+                              foregroundColor: Colors.black,
                             ),
-                            backgroundColor: Colors.blue,
-                            foregroundColor: Colors.black,
+                            child: const Text('CLOSE')
                           ),
-                          child: const Text('ADD TO CART')
-                        ),
+                          ElevatedButton(
+                            onPressed: shopProvider.isInCart(widget.product) ?  null : () => shopProvider.addToCart(widget.product), 
+                            style: ElevatedButton.styleFrom(
+                              shape: const RoundedRectangleBorder( 
+                                borderRadius: BorderRadius.zero
+                              ),
+                              backgroundColor: Colors.blue,
+                              foregroundColor: Colors.black,
+                            ),
+                            child: const Text('ADD TO CART')
+                          ),
+                          
+                        ],
                       )
+                     
                   ]
-                ),
-              ),
+                ));
+              }),
             ),
           
         );

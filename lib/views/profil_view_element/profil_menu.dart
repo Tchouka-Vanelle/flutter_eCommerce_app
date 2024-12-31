@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:task_management/models/user_session.dart';
+import 'package:task_management/utils/shop_provider.dart';
 import 'package:task_management/views/profil_view_element/login_view.dart';
 
 class ProfilMenu extends StatelessWidget {
 
   const ProfilMenu({super.key});
 
-  Future<void> _logout(BuildContext context) async {
+  Future<void> _logout(BuildContext context, ShopProvider shopProvider) async {
     final session = await UserSession.instance;
+    
+
     await session.clearSession();
+    shopProvider.clear();
 
     if (context.mounted) {
-       Navigator.pushReplacement(
+      Navigator.pushReplacement(
         context, 
         MaterialPageRoute(builder: (context) => const LoginView())
       );
@@ -20,6 +25,9 @@ class ProfilMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
+    final shopProvider = Provider.of<ShopProvider>(context);
+
     return PopupMenuButton<String>(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
@@ -33,7 +41,7 @@ class ProfilMenu extends StatelessWidget {
             );
             break;
           case 'Logout':
-            _logout(context);
+            _logout(context, shopProvider);
             break;
           }
       },

@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:task_management/models/product.dart';
+import 'package:task_management/utils/shop_provider.dart';
 
 class ShowPaymentPopup extends StatelessWidget{
-  const ShowPaymentPopup({super.key});
-  
+  const ShowPaymentPopup({super.key, required this.selectedProduct});
+
+  final List<Product> selectedProduct;
+ 
+
   @override
   Widget build (BuildContext context) {
      
-  return  AlertDialog(
+    final shopProvider = Provider.of<ShopProvider>(context);
+    return  AlertDialog(
 
       contentPadding:  const EdgeInsets.all(16),
       shape: RoundedRectangleBorder( 
@@ -17,13 +24,13 @@ class ShowPaymentPopup extends StatelessWidget{
             maxHeight: 300,
             maxWidth: 400,
         ),
-        child: const SingleChildScrollView(
-          padding: EdgeInsets.only(right: 14),
+        child:  SingleChildScrollView(
+          padding: const EdgeInsets.only(right: 14),
           scrollDirection: Axis.vertical,
           child: Column(
             mainAxisSize: MainAxisSize.min, // only use the necessary space
             children: [
-              SizedBox(
+              const SizedBox(
                 width: 350,
                 child: TextField(
                   keyboardType: TextInputType.text,
@@ -33,8 +40,8 @@ class ShowPaymentPopup extends StatelessWidget{
                   ),
                 ),
               ),
-              SizedBox(height: 10,),
-              SizedBox(
+              const SizedBox(height: 10,),
+              const SizedBox(
                 width: 350,
                 child: TextField(
                   keyboardType: TextInputType.text,
@@ -44,21 +51,29 @@ class ShowPaymentPopup extends StatelessWidget{
                   ),
                 ),
               ),
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
                     width: 200,
                     child: TextField(
+                      readOnly: true,
                       keyboardType: TextInputType.datetime,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: "Expiration date    ",
                         border: OutlineInputBorder(),
                       ),
+                      onTap: () async {
+                        await showDatePicker(
+                          context: context,
+                          firstDate: DateTime.now(),
+                          lastDate: DateTime.now().add(const Duration(days: 365*15))
+                        );
+                      },
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 100,
                     child: TextField(
                       keyboardType: TextInputType.text,
@@ -70,11 +85,11 @@ class ShowPaymentPopup extends StatelessWidget{
                   ),
                 ],
               ),
-              SizedBox(height: 25,),
-              Text("By confirm the payment, you agree to the property rules, terms and conditions, privacy policy",
+              const SizedBox(height: 25,),
+              const Text("By confirm the payment, you agree to the property rules, terms and conditions, privacy policy",
                   style: TextStyle(fontSize: 7),
               ),
-              SizedBox(height: 10,)
+              const SizedBox(height: 10,)
             ],
           ),
         ),
@@ -94,8 +109,8 @@ class ShowPaymentPopup extends StatelessWidget{
               ),
               child: const Text('CANCEL')
             ),
-             ElevatedButton(
-              onPressed: () {Navigator.of(context).pop();}, 
+            ElevatedButton(
+              onPressed: () {selectedProduct.forEach(shopProvider.removeFromCart);}, 
               style: ElevatedButton.styleFrom(
                 shape: const RoundedRectangleBorder( 
                   borderRadius: BorderRadius.zero

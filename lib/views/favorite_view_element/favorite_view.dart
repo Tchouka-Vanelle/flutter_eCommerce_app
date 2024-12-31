@@ -1,59 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:task_management/models/product.dart';
-import 'package:task_management/models/user_session.dart';
+import 'package:task_management/utils/shop_provider.dart';
 import 'package:task_management/utils/show_product_details.dart';
 
 
-class FavoriteView extends StatefulWidget {
+class FavoriteView extends StatelessWidget {
 
   const FavoriteView({super.key});
 
   @override
-  State<FavoriteView> createState() => _FavoriteViewState();
-}
-
-class _FavoriteViewState extends State<FavoriteView> {
-
-  late ValueNotifier<List<Product>> _favoriteProductsNotifier = ValueNotifier([]);
-  bool _isLoaded = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _loadFavorites();
-  }
-
-  void _loadFavorites() async{
-     final session = await UserSession.instance;
-      _favoriteProductsNotifier = ValueNotifier<List<Product>>(session.favItems);
-      setState(() {
-        _isLoaded = true;
-      });
-  }
-
-
-  void _deleteFavorite(Product product) async {
-    final session = await UserSession.instance;
-
-     if (_favoriteProductsNotifier.value.contains(product)) {
-      _favoriteProductsNotifier.value =
-          List.from(_favoriteProductsNotifier.value)..remove(product);
-    } else {
-      _favoriteProductsNotifier.value =
-          List.from(_favoriteProductsNotifier.value)..add(product);
-    }
-
-    session.setFavItems(_favoriteProductsNotifier.value);
-
-  }
-
-
-
-  @override
   Widget build(BuildContext context) {
-    if (!_isLoaded) {
-      return const Center(child: CircularProgressIndicator());
-    }
+   
     return Column( 
       mainAxisAlignment: MainAxisAlignment.start,
       children: [ 
@@ -76,16 +34,16 @@ class _FavoriteViewState extends State<FavoriteView> {
               padding: const EdgeInsets.only(left: 7),
               child: SizedBox(
                 width: double.infinity,
-                child:  ValueListenableBuilder<List<Product>>(
-                  valueListenable: _favoriteProductsNotifier,
-                  builder: (context, favoriteProducts, child) {
-                    return SingleChildScrollView(
+                child:  Consumer<ShopProvider>(
+                      builder: (context, shopProvider, child) {
+
+                     return SingleChildScrollView(
                       scrollDirection: Axis.vertical,
                       child: Wrap(
                         runAlignment: WrapAlignment.start,
                         spacing: 7, //space horizontal
                         runSpacing: 5,
-                        children: favoriteProducts.asMap().entries.map((entry) {
+                        children: shopProvider.favItems.asMap().entries.map((entry) {
                           
                           Product e = entry.value;
                       
@@ -110,7 +68,7 @@ class _FavoriteViewState extends State<FavoriteView> {
                                           padding: const EdgeInsets.all(3),
                                           child: IconButton( 
                                               icon: const Icon(  Icons.favorite, color: Colors.black),
-                                              onPressed: () => _deleteFavorite(e)
+                                              onPressed: () => shopProvider.toggleFavorite(e)
                                           )
                                         )
                                       ),
@@ -141,7 +99,7 @@ class _FavoriteViewState extends State<FavoriteView> {
                                       Align(
                                         alignment: Alignment.center,
                                         child:  ElevatedButton(
-                                            onPressed: () {}, 
+                                            onPressed: shopProvider.isInCart(e) ?  null : () => shopProvider.addToCart(e), 
                                             style: ElevatedButton.styleFrom(
                                               shape: const RoundedRectangleBorder( 
                                                 borderRadius: BorderRadius.zero
@@ -159,9 +117,7 @@ class _FavoriteViewState extends State<FavoriteView> {
                         }).toList(),
                       ),
                     );
-                  }
-                )
-              
+                  })
               ),
             )
           ),

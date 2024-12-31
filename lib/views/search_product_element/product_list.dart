@@ -1,61 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:task_management/models/product.dart';
-import 'package:task_management/models/user_session.dart';
+import 'package:task_management/utils/shop_provider.dart';
 import 'package:task_management/utils/show_product_details.dart';
 
-
-class ProductList extends StatefulWidget {
+class ProductList extends StatelessWidget {
 
   const ProductList({super.key, required this.productList});
+
   final List<Product> productList;
-
-  @override
-  State<ProductList> createState() => _ProductListState();
-}
-
-class _ProductListState extends State<ProductList> {
-
-  late ValueNotifier<List<Product>> _favoriteProductsNotifier = ValueNotifier([]);
-  bool _isLoaded = false;
-
-
-  @override
-  void initState() {
-    super.initState();
-    _loadFavorites();
-  }
-
-  void _loadFavorites() async{
-     final session = await UserSession.instance;
-      _favoriteProductsNotifier = ValueNotifier<List<Product>>(session.favItems);
-      setState(() {
-        _isLoaded = true;
-      });
-  }
-
-
-  void _toggleFavorite(Product product) async {
-    final session = await UserSession.instance;
-
-     if (_favoriteProductsNotifier.value.contains(product)) {
-      _favoriteProductsNotifier.value =
-          List.from(_favoriteProductsNotifier.value)..remove(product);
-    } else {
-      _favoriteProductsNotifier.value =
-          List.from(_favoriteProductsNotifier.value)..add(product);
-    }
-
-    session.setFavItems(_favoriteProductsNotifier.value);
-
-  }
-
 
   @override
   Widget build(BuildContext context) {
 
-    if (!_isLoaded) {
-    return const Center(child: CircularProgressIndicator());
-    }
     return Column( 
       mainAxisAlignment: MainAxisAlignment.start,
       children: [ 
@@ -80,11 +37,17 @@ class _ProductListState extends State<ProductList> {
                   runAlignment: WrapAlignment.start,
                   spacing: 7, //space horizontal
                   runSpacing: 5,
-                  children: widget.productList.asMap().entries.map((entry) {
+                  children: productList.asMap().entries.map((entry) {
                     
                     Product e = entry.value;
 
-                    return  Container( 
+                    return Consumer<ShopProvider>(
+                      builder: (context, shopProvider, child) {
+
+                        final isFavorite = shopProvider.isFavorite(e);
+                        final isIncart = shopProvider.isInCart(e);
+
+                      return  Container( 
                         padding: const EdgeInsets.all(7),
                         margin: const EdgeInsets.all(7),
                         decoration: BoxDecoration( 
@@ -103,18 +66,12 @@ class _ProductListState extends State<ProductList> {
                                   alignment: Alignment.centerRight,
                                   child: Padding(
                                     padding: const EdgeInsets.all(3),
-                                    child:  ValueListenableBuilder<List<Product>>(
-                                      valueListenable: _favoriteProductsNotifier,
-                                      builder: (context, favoriteProducts, child) {
-                                        return
-                                            IconButton( 
-                                              icon: Icon( 
-                                                favoriteProducts.contains(e) ? Icons.favorite : Icons.favorite_border ,
-                                                color: Colors.black),
-                                              onPressed: () => _toggleFavorite(e)
-                                            );
-                                      }
-                                    )
+                                      child: IconButton( 
+                                        icon: Icon( 
+                                          isFavorite ? Icons.favorite : Icons.favorite_border ,
+                                          color: Colors.black),
+                                        onPressed: () => shopProvider.toggleFavorite(e)
+                                      )
                                   )
                                 ),
                                 GestureDetector(
@@ -142,7 +99,7 @@ class _ProductListState extends State<ProductList> {
                                 Align(
                                   alignment: Alignment.center,
                                   child:  ElevatedButton(
-                                      onPressed: () {}, 
+                                      onPressed: isIncart ? null : () => shopProvider.addToCart(e), 
                                       style: ElevatedButton.styleFrom(
                                         shape: const RoundedRectangleBorder( 
                                           borderRadius: BorderRadius.zero
@@ -160,6 +117,8 @@ class _ProductListState extends State<ProductList> {
                           )
                         )
                       );
+                    }
+                  );
                   }).toList(),
                 )
               )

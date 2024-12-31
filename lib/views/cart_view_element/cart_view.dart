@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:task_management/models/product.dart';
-import 'package:task_management/models/user_session.dart';
+import 'package:task_management/utils/shop_provider.dart';
 import 'package:task_management/views/cart_view_element/product_to_buy.dart';
 import 'package:task_management/views/search_product_element/recommended_for_you_section.dart';
 
 class CartView extends StatelessWidget{
   CartView({super.key});
-
-  Future<List<Product>> _loadCartItems() async {
-    final session = await UserSession.instance;
-    return session.cartItems;
-  }
 
   final List<Product> recommendedForYou = [
     Product(description: 'description1 oi zkzks  n,kpq^dl qskdp jjjjjjjj kkkkkkk o nnkkk llll ppppp eeeee ttt y y m zz eer zzzz eedd eer zzz zzz ee eee pppp jjj hhhh fder', price: 14.0, images: ['robe', 'coat', 'robe', 'coat'], id: 1, name: 'robe', nbrAchat: 18),
@@ -33,25 +29,9 @@ class CartView extends StatelessWidget{
           children: [
             const Row(),
         
-            FutureBuilder(
-              future: _loadCartItems(), 
-              builder: (context, snapshot){
-                if(snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                } 
-                else if (snapshot.hasError) {
-                  return const Text(
-                            'Something went wrong. Please try again later.',
-                            style: TextStyle(color: Colors.red, fontSize: 16),
-                          );
-                }
-                else if (snapshot.hasData) {
-                  final productToBuy = snapshot.data!;
-                  return ProductToBuy(productToBuy: productToBuy);
-                }
-                else {
-                  return const ProductToBuy(productToBuy: []);
-                }
+            Consumer<ShopProvider>(
+              builder: (context, shopProvider, child) {
+                return ProductToBuy(productToBuy: shopProvider.cartItems);
               }
             ),
 

@@ -1,35 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:task_management/models/cart_item.dart';
 import 'package:task_management/models/product.dart';
+import 'package:task_management/utils/shop_provider.dart';
 import 'package:task_management/views/cart_view_element/show_payment_popup.dart';
 import 'package:task_management/utils/show_product_details.dart';
 
 class ProductToBuy extends StatefulWidget {
   const ProductToBuy({super.key, required this.productToBuy});
 
-  final List<Product> productToBuy;
+  final List<CartItem> productToBuy;
 
   @override
   State<ProductToBuy> createState() => _ProductToBuyState();
 }
 
 class _ProductToBuyState extends State<ProductToBuy> {
+
   late List<bool> _isChecked;
-  late List<int> _quantity;
+
   @override
   void initState(){
     super.initState();
      _isChecked = List<bool>.filled(widget.productToBuy.length, false);
-     _quantity = List<int>.filled(widget.productToBuy.length, 1);
   }
- double get _totalPrice => widget.productToBuy
+  double get _totalPrice => widget.productToBuy
             .asMap().entries.where((entry) => _isChecked[entry.key])
             .fold(
               0.0,
-              (sum, entry) => sum + (entry.value.price * _quantity[entry.key]) );
+              (sum, entry) => sum + (entry.value.product.price * entry.value.quantity) );
+
+  List<Product> get _selectedProduct => widget.productToBuy.asMap()
+            .entries.where((entry) => _isChecked[entry.key] == true)
+            .map((entry) => entry.value.product)
+            .toList();
+
 
   @override
   Widget build(BuildContext context) {
 
+    final shopProvider = Provider.of<ShopProvider>(context);
 
     return Column( 
       mainAxisAlignment: MainAxisAlignment.start,
@@ -57,12 +67,11 @@ class _ProductToBuyState extends State<ProductToBuy> {
                     physics: const NeverScrollableScrollPhysics(), // désactive le défilement interne
                     itemCount: widget.productToBuy.length,
                     itemBuilder: (context, index) {
-                      debugPrint('Building item at index $index: ${widget.productToBuy[index].name}');
+                      debugPrint('Building item at index $index: ${widget.productToBuy[index].product.name}');
                       return 
                         Card(
-                          margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                          child: SizedBox(
-                            height: 80,
+                          margin: const EdgeInsets.symmetric(vertical: 7, horizontal: 16),
+                          child:  IntrinsicHeight(
                             child: ListTile(
                               leading: SizedBox( 
                                 width: 30,
@@ -76,27 +85,17 @@ class _ProductToBuyState extends State<ProductToBuy> {
                                   }
                                 ),
                               ),
-                              title:Text(widget.productToBuy[index].name, 
+                              title:Text(widget.productToBuy[index].product.name, 
                                     style: const TextStyle(fontSize: 17),
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 1,),
-                              subtitle: Text('Price: \$${widget.productToBuy[index].price.toStringAsFixed(2)}',
+                              subtitle: Text('Price: \$${widget.productToBuy[index].product.price.toStringAsFixed(2)}',
                                         overflow: TextOverflow.ellipsis,
                                         style: const TextStyle(fontSize: 18),
                                         maxLines: 1,),
                               trailing: SizedBox(
                                 width: 240,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    debugPrint('Tapped on product details for ${widget.productToBuy[index].name}');
-                                    showDialog( 
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return  ShowProductDetails(product: widget.productToBuy[index]);
-                                      },
-                                    );
-                                  },
-                                  child: Row(
+                                child: Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
                                       Container( 
@@ -114,54 +113,73 @@ class _ProductToBuyState extends State<ProductToBuy> {
                                           child: Row(
                                             crossAxisAlignment: CrossAxisAlignment.center,
                                             children: [ 
-                                              Image(image: AssetImage('assets/product_images/${widget.productToBuy[index].images[0]}.png'),
-                                                    width: 100,  height: 100,),
+                                              GestureDetector(
+                                                onTap: () {
+                                                  showDialog( 
+                                                    context: context,
+                                                    builder: (BuildContext context) {
+                                                      return  ShowProductDetails(product: widget.productToBuy[index].product);
+                                                    },
+                                                  );
+                                                },
+                                                child:  Image(image: AssetImage('assets/product_images/${widget.productToBuy[index].product.images[0]}.png'),
+                                                    fit: BoxFit.scaleDown,
+                                                    width: 50,  height: 150,),
+                                              )
                                             ],
                                           )
                                         )
                                       ),
                                       SizedBox(
                                         width: 100,
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.end,
+
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
-                                            IconButton(
-                                              onPressed: (){
-                                                setState(() {
-                                                  if(_quantity[index] > 1) {
-                                                    _quantity[index]--;
-                                                  }else{
-                                                    widget.productToBuy.removeAt(index);
-                                                  }
-                                                });
-                                              }, 
-                                              icon: const Icon(Icons.remove)
+                                            Expanded(
+                                              child: IconButton( 
+                                                icon: Icon( 
+                                                  shopProvider.isFavorite(widget.productToBuy[index].product) ? Icons.favorite : Icons.favorite_border ,
+                                                  color: Colors.black),
+                                                onPressed: () => shopProvider.toggleFavorite(widget.productToBuy[index].product)
+                                              ),
                                             ),
-                                            Text(_quantity[index].toString()),
-                                            IconButton(
-                                              onPressed: (){
-                                                setState(() {
-                                                    _quantity[index]++;
-                                                });
-                                              }, 
-                                              icon: const Icon(Icons.add)
-                                            )
-                                          ],
-                                        ),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.end,
+                                              children: [
+                                                IconButton(
+                                                  onPressed: (){
+                                                    setState(() {
+                                                      shopProvider.removeFromCart(widget.productToBuy[index].product);
+                                                    });
+                                                  }, 
+                                                  icon: const Icon(Icons.remove)
+                                                ),
+                                                Text(shopProvider.getQuantity(widget.productToBuy[index].product).toString()),
+                                                IconButton(
+                                                  onPressed: (){
+                                                    setState(() {
+                                                        shopProvider.addToCart(widget.productToBuy[index].product);
+                                                    });
+                                                  }, 
+                                                  icon: const Icon(Icons.add)
+                                                )
+                                              ],
+                                            ),
+                                          ]
                                       ),
-                                              
+                                      )       
                                     ],
                                   )
-                                ),
-                              )
-                                              
-                            ),
-                          ),
-                          
-                          );
-                    }
-                  ),
-                  
+                                          
+                            )
+                      )
+                                        
+                         )
+                                      
+                    );
+                   }
+                ),
                 Padding(
                   padding: const EdgeInsets.all(14),
                   child: Column(
@@ -180,7 +198,7 @@ class _ProductToBuyState extends State<ProductToBuy> {
                           showDialog( 
                             context: context,
                             builder: (BuildContext context) {
-                              return  const ShowPaymentPopup();
+                              return ShowPaymentPopup(selectedProduct: _selectedProduct);
                             },
                           );
                         } : null, 
@@ -197,13 +215,11 @@ class _ProductToBuyState extends State<ProductToBuy> {
                     ]
                   )
                 ),
-
-                ])
-                  
-                )
-              )
-            
-      ],
+              ]
+            )      
+          )
+        ) 
+      ]
     );
   }
 }

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:task_management/models/cart_item.dart';
 import 'package:task_management/models/product.dart';
 import 'package:task_management/models/user.dart';
 import 'package:task_management/models/user_session.dart';
+import 'package:task_management/utils/shop_provider.dart';
 import '../../controllers/authentification.dart';
 
 class LoginView extends StatefulWidget {
@@ -21,7 +24,7 @@ class _LoginViewState extends State<LoginView> {
   bool _isPasswordVisible = false;
 
   //Method to manage the connexion with an email and an password
-  Future<void> _login() async {
+  Future<void> _login({shopProvider}) async {
 
     setState(() {
       _isLoading = true;
@@ -47,18 +50,19 @@ class _LoginViewState extends State<LoginView> {
         session.setIsLoggedIn(true);
 
         var cartItems = [
-        Product(description: 'description2', price: 18.0, images: ['coat'], id: 2, name: 'coattttttttttttttttttttttttttttt tttttttttt', nbrAchat: 15),
-        Product(description: 'description5', price: 14.0, images: ['robe'], id: 4, name: 'tshirt', nbrAchat: 7),
-        Product(description: 'description6', price: 18.0, images: ['coat'], id: 2, name: 'jupe', nbrAchat: 7),
+          Product(id: 1, description: 'description1 oi zkzks  n,kpq^dl qskdp jjjjjjjj kkkkkkk o nnkkk llll ppppp eeeee ttt y y m zz eer zzzz eedd eer zzz zzz ee eee pppp jjj hhhh fder', price: 14.0, images: ['robe', 'coat', 'robe', 'coat'], name: 'robe', nbrAchat: 18),
+          Product(id: 2, description: 'description2', price: 18.0, images: ['coat'], name: 'coattttttttttttttttttttttttttttt tttttttttt', nbrAchat: 15),
+          Product(id: 6, description: 'description6', price: 41.0, images: ['coat'], name: 'jupe', nbrAchat: 7),
         ];
         var favItems =  [
-        Product(description: 'description1 oi zkzks  n,kpq^dl qskdp jjjjjjjj kkkkkkk o nnkkk llll ppppp eeeee ttt y y m zz eer zzzz eedd eer zzz zzz ee eee pppp jjj hhhh fder', price: 14.0, images: ['robe', 'coat', 'robe', 'coat'], id: 1, name: 'robe', nbrAchat: 18),
-        Product(description: 'description2', price: 18.5, images: ['coat'], id: 2, name: 'coattttttttttttttttttttttttttttt tttttttttt', nbrAchat: 15),
-        Product(description: 'description5', price: 33.0, images: ['robe'], id: 4, name: 'tshirt', nbrAchat: 7)
+          Product(description: 'description1 oi zkzks  n,kpq^dl qskdp jjjjjjjj kkkkkkk o nnkkk llll ppppp eeeee ttt y y m zz eer zzzz eedd eer zzz zzz ee eee pppp jjj hhhh fder', price: 14.0, images: ['robe', 'coat', 'robe', 'coat'], id: 1, name: 'robe', nbrAchat: 18),
+          Product(description: 'description2', price: 18.5, images: ['coat'], id: 2, name: 'coattttttttttttttttttttttttttttt tttttttttt', nbrAchat: 15),
+          Product(description: 'description5', price: 33.0, images: ['robe'], id: 4, name: 'tshirt', nbrAchat: 7)
         ];
 
-        session.setCartItems(cartItems);
-        session.setFavItems(favItems);
+        var cartItemList = cartItems.map((product) => CartItem(product: product, quantity: 1)).toList();
+        shopProvider.cartItems = cartItemList;
+        shopProvider.favItems = favItems;
 
         session.saveSession();
 
@@ -82,7 +86,7 @@ class _LoginViewState extends State<LoginView> {
   
   @override
   Widget build(BuildContext context) {
-    
+    final shopProvider = Provider.of<ShopProvider>(context);
     return Scaffold( 
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -127,7 +131,7 @@ class _LoginViewState extends State<LoginView> {
                       }
                     )
                   ),
-                  onSubmitted: (_) => _login(),
+                  onSubmitted: (_) => _login(shopProvider: shopProvider),
                 ),
                 const SizedBox(height: 40),
                 ElevatedButton(

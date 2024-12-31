@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:task_management/utils/shop_provider.dart';
 
 class NavbarApp extends StatelessWidget {
  
@@ -10,6 +12,9 @@ class NavbarApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
+    final shopProvider = Provider.of<ShopProvider>(context);
+
     return  BottomNavigationBar( 
 
         currentIndex: currentIndex,
@@ -33,7 +38,7 @@ class NavbarApp extends StatelessWidget {
             label: 'Favorite',
           ),
           BottomNavigationBarItem( 
-            icon: _buildCartIcon(Icons.shopping_cart, currentIndex, 3),
+            icon: _buildCartIcon(Icons.shopping_cart, currentIndex, 3, shopProvider.cartItemCount),
             label: 'Cart',
           ),
         ],
@@ -54,8 +59,9 @@ Widget _buildCircleIcon(IconData icon, int currentIndex, int index) {
   );
 }
 
-Widget _buildCartIcon(IconData icon, int currentIndex, int index) {
+Widget _buildCartIcon(IconData icon, int currentIndex, int index, int cartItemTotal) {
   final isSelected = currentIndex == index;
+  
   return Stack(
     clipBehavior: Clip.none, //allows the circle to sligthly overlap the icon
     children: [ 
@@ -79,7 +85,7 @@ Widget _buildCartIcon(IconData icon, int currentIndex, int index) {
               shape: BoxShape.circle,
             ),
           
-            child: const Text('14', style: TextStyle(color: Colors.white),),
+            child: Text(cartItemTotal.toString(), style: const TextStyle(color: Colors.white),),
             
           )
         )
