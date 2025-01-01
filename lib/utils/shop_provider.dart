@@ -52,7 +52,7 @@ class ShopProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void removeFromCart(Product product) {
+  void reduceFromCart(Product product) {
     
     final existingItem = _cartItems.firstWhere(
       (item) => item.product == product,
@@ -61,7 +61,18 @@ class ShopProvider extends ChangeNotifier {
 
     if (existingItem.quantity > 1) {
       existingItem.quantity --;
-    } else {
+    } 
+    notifyListeners();
+  }
+
+  void removeFromCart(Product product) {
+    
+    final existingItem = _cartItems.firstWhere(
+      (item) => item.product == product,
+      orElse: () => CartItem(product: product, quantity: 0),
+    );
+
+    if (existingItem.quantity > 0) {
       _cartItems.remove(existingItem);
     }
     notifyListeners();

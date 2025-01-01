@@ -98,77 +98,52 @@ class _ProductToBuyState extends State<ProductToBuy> {
                                 child: Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
-                                      Container( 
-                                        padding: const EdgeInsets.all(7),
-                                        margin: const EdgeInsets.all(7),
-                                        decoration: BoxDecoration( 
-                                          color:  Colors.grey[70],
-                                          border: Border.all( 
-                                            color: Colors.grey.shade300,
-                                            width: 1.5,
-                                          ), 
-                                        ),
-                                        child: SizedBox(
-                                          height: double.infinity,
-                                          child: Row(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: [ 
-                                              GestureDetector(
-                                                onTap: () {
-                                                  showDialog( 
-                                                    context: context,
-                                                    builder: (BuildContext context) {
-                                                      return  ShowProductDetails(product: widget.productToBuy[index].product);
-                                                    },
-                                                  );
-                                                },
-                                                child:  Image(image: AssetImage('assets/product_images/${widget.productToBuy[index].product.images[0]}.png'),
-                                                    fit: BoxFit.scaleDown,
-                                                    width: 50,  height: 150,),
-                                              )
-                                            ],
-                                          )
-                                        )
+                                      GestureDetector(
+                                        onTap: () {
+                                          showDialog( 
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return  ShowProductDetails(product: widget.productToBuy[index].product);
+                                            },
+                                          );
+                                        },
+                                        child:  Image(image: AssetImage('assets/product_images/${widget.productToBuy[index].product.images[0]}.png'),
+                                            fit: BoxFit.scaleDown,
+                                            width: 50,  height: 150,),
                                       ),
-                                      SizedBox(
-                                        width: 100,
-
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Expanded(
-                                              child: IconButton( 
-                                                icon: Icon( 
-                                                  shopProvider.isFavorite(widget.productToBuy[index].product) ? Icons.favorite : Icons.favorite_border ,
-                                                  color: Colors.black),
-                                                onPressed: () => shopProvider.toggleFavorite(widget.productToBuy[index].product)
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          IconButton(
+                                            onPressed: (){
+                                              setState(() {
+                                                shopProvider.removeFromCart(widget.productToBuy[index].product);
+                                              });
+                                            }, 
+                                            icon: const Icon(Icons.remove)
+                                          ),
+                                          Text(shopProvider.getQuantity(widget.productToBuy[index].product).toString(),
+                                              style: const TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold
                                               ),
-                                            ),
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.end,
-                                              children: [
-                                                IconButton(
-                                                  onPressed: (){
-                                                    setState(() {
-                                                      shopProvider.removeFromCart(widget.productToBuy[index].product);
-                                                    });
-                                                  }, 
-                                                  icon: const Icon(Icons.remove)
-                                                ),
-                                                Text(shopProvider.getQuantity(widget.productToBuy[index].product).toString()),
-                                                IconButton(
-                                                  onPressed: (){
-                                                    setState(() {
-                                                        shopProvider.addToCart(widget.productToBuy[index].product);
-                                                    });
-                                                  }, 
-                                                  icon: const Icon(Icons.add)
-                                                )
-                                              ],
-                                            ),
-                                          ]
+                                          ),
+                                          IconButton(
+                                            onPressed: (){
+                                              setState(() {
+                                                  shopProvider.addToCart(widget.productToBuy[index].product);
+                                              });
+                                            }, 
+                                            icon: const Icon(Icons.add)
+                                          )
+                                        ],
                                       ),
-                                      )       
+                                      IconButton( 
+                                        icon: Icon( 
+                                          shopProvider.isFavorite(widget.productToBuy[index].product) ? Icons.favorite : Icons.favorite_border ,
+                                          color: Colors.black),
+                                        onPressed: () => shopProvider.toggleFavorite(widget.productToBuy[index].product)
+                                      ),
                                     ],
                                   )
                                           

@@ -3,11 +3,25 @@ import 'package:provider/provider.dart';
 import 'package:task_management/models/product.dart';
 import 'package:task_management/utils/shop_provider.dart';
 
-class ShowPaymentPopup extends StatelessWidget{
+class ShowPaymentPopup extends StatefulWidget{
   const ShowPaymentPopup({super.key, required this.selectedProduct});
 
   final List<Product> selectedProduct;
- 
+
+  @override
+  State<ShowPaymentPopup> createState() => _ShowPaymentPopupState();
+}
+
+class _ShowPaymentPopupState extends State<ShowPaymentPopup> {
+  final TextEditingController cardNumberController = TextEditingController();
+
+  final TextEditingController cardHolderController = TextEditingController();
+
+  final TextEditingController cvvController = TextEditingController();
+
+  final TextEditingController expirationDateController = TextEditingController();
+
+  DateTime? expirationDate;
 
   @override
   Widget build (BuildContext context) {
@@ -30,22 +44,24 @@ class ShowPaymentPopup extends StatelessWidget{
           child: Column(
             mainAxisSize: MainAxisSize.min, // only use the necessary space
             children: [
-              const SizedBox(
+               SizedBox(
                 width: 350,
                 child: TextField(
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(
+                  controller: cardNumberController,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
                     labelText: "Card Number",
                     border: OutlineInputBorder(),
                   ),
                 ),
               ),
               const SizedBox(height: 10,),
-              const SizedBox(
+               SizedBox(
                 width: 350,
                 child: TextField(
+                  controller: cardHolderController,
                   keyboardType: TextInputType.text,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: "Card Holder",
                     border: OutlineInputBorder(),
                   ),
@@ -58,6 +74,7 @@ class ShowPaymentPopup extends StatelessWidget{
                   SizedBox(
                     width: 200,
                     child: TextField(
+                      controller: expirationDateController,
                       readOnly: true,
                       keyboardType: TextInputType.datetime,
                       decoration: const InputDecoration(
@@ -65,19 +82,27 @@ class ShowPaymentPopup extends StatelessWidget{
                         border: OutlineInputBorder(),
                       ),
                       onTap: () async {
-                        await showDatePicker(
+                        final pickedDate = await showDatePicker(
                           context: context,
                           firstDate: DateTime.now(),
                           lastDate: DateTime.now().add(const Duration(days: 365*15))
                         );
+                        if (pickedDate != null){
+                          setState(() {
+                            expirationDate = pickedDate;
+                            expirationDateController.text = 
+                              "${pickedDate.month.toString().padLeft(2, '0')}/${pickedDate.year}";
+                          });
+                        }
                       },
                     ),
                   ),
-                  const SizedBox(
+                  SizedBox(
                     width: 100,
                     child: TextField(
-                      keyboardType: TextInputType.text,
-                      decoration: InputDecoration(
+                      controller: cvvController,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
                         labelText: "CVV        ",
                         border: OutlineInputBorder(),
                       ),
@@ -110,7 +135,24 @@ class ShowPaymentPopup extends StatelessWidget{
               child: const Text('CANCEL')
             ),
             ElevatedButton(
-              onPressed: () {selectedProduct.forEach(shopProvider.removeFromCart);}, 
+              onPressed: () {
+                if(cardNumberController.text.isEmpty ||
+                   cardHolderController.text.isEmpty ||
+                   expirationDate == null ||
+                   cvvController.text.isEmpty
+                ) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Please fill all fields!"),
+                      backgroundColor: Colors.red,
+                    )
+                  );
+                } else {
+                  Navigator.of(context).pop();
+                  widget.selectedProduct.forEach(shopProvider.removeFromCart);
+                }
+
+              }, 
               style: ElevatedButton.styleFrom(
                 shape: const RoundedRectangleBorder( 
                   borderRadius: BorderRadius.zero

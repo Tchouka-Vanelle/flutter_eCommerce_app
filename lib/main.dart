@@ -26,7 +26,7 @@ void main() async{
       var cartItems = [
         Product(id: 1, description: 'description1 oi zkzks  n,kpq^dl qskdp jjjjjjjj kkkkkkk o nnkkk llll ppppp eeeee ttt y y m zz eer zzzz eedd eer zzz zzz ee eee pppp jjj hhhh fder', price: 14.0, images: ['robe', 'coat', 'robe', 'coat'], name: 'robe', nbrAchat: 18),
         Product(id: 3, description: 'description3 kal lpzpz pp', price: 24.0, images: ['robe'], name: 'pantalon', nbrAchat: 14),
-        Product(id: 5, description: 'description5', price: 33.0, images: ['robe'], name: 'tshirt', nbrAchat: 7),
+        Product(id: 4, description: 'description4 lolipop', price: 29.0, images: ['coat'],  name: 'pull', nbrAchat: 11),
       ];
       var cartItemList = cartItems.map((product) => CartItem(product: product, quantity: 1)).toList();
       shopProvider.cartItems = cartItemList;

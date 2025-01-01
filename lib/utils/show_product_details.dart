@@ -48,85 +48,85 @@ class _ShowProductDetailsState extends State<ShowProductDetails> {
                             onPressed: () => shopProvider.toggleFavorite(widget.product)
                           )
                         ),
-                      Row( 
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [ 
-                          TextButton(
-                            onPressed: (){
-                              setState(() {
-                                  photo = (photo-1 + widget.product.images.length) % widget.product.images.length;
-                              });
-                            }, 
-                            child: const Icon(Icons.arrow_left_rounded)
-                          ),
-                          Image(
-                            image: AssetImage('assets/product_images/${widget.product.images[photo]}.png'),
-                            width: 150,  height: 150,
-                          ),
-                          TextButton(
-                            onPressed: (){
-                              setState(() {
-                                photo = (photo + 1) % widget.product.images.length;
-                              });
-                            }, 
-                            child: const Icon(Icons.arrow_right_rounded)
-                          ),
-                        ],
-                      ),
-                    
-                      const SizedBox(height: 11,),
-                    
-                      Text( 
-                        widget.product.name, 
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                      ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child:  Text(
-                          '\$${widget.product.price.toStringAsFixed(2)}',
-                          textAlign: TextAlign.left,
-                          style: const TextStyle( 
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            color: Colors.blue
-                          )
+                        Row( 
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [ 
+                            TextButton(
+                              onPressed: (){
+                                setState(() {
+                                    photo = (photo-1 + widget.product.images.length) % widget.product.images.length;
+                                });
+                              }, 
+                              child: const Icon(Icons.arrow_left_rounded)
+                            ),
+                            Image(
+                              image: AssetImage('assets/product_images/${widget.product.images[photo]}.png'),
+                              width: 150,  height: 150,
+                            ),
+                            TextButton(
+                              onPressed: (){
+                                setState(() {
+                                  photo = (photo + 1) % widget.product.images.length;
+                                });
+                              }, 
+                              child: const Icon(Icons.arrow_right_rounded)
+                            ),
+                          ],
                         ),
-                      ),
-                     
-                      const SizedBox(height: 11,),
-                      Text(
-                        widget.product.description,
-                        textAlign: TextAlign.left,
-                      ),
-                      const SizedBox(height: 21,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          ElevatedButton(
-                            onPressed: () {Navigator.of(context).pop();}, 
-                            style: ElevatedButton.styleFrom(
-                              shape: const RoundedRectangleBorder( 
-                                borderRadius: BorderRadius.zero
-                              ),
-                              backgroundColor: Colors.red,
-                              foregroundColor: Colors.black,
-                            ),
-                            child: const Text('CLOSE')
+                    
+                        const SizedBox(height: 11,),
+                      
+                        Text( 
+                          widget.product.name, 
+                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                        ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child:  Text(
+                            '\$${widget.product.price.toStringAsFixed(2)}',
+                            textAlign: TextAlign.left,
+                            style: const TextStyle( 
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              color: Colors.blue
+                            )
                           ),
-                          ElevatedButton(
-                            onPressed: shopProvider.isInCart(widget.product) ?  null : () => shopProvider.addToCart(widget.product), 
-                            style: ElevatedButton.styleFrom(
-                              shape: const RoundedRectangleBorder( 
-                                borderRadius: BorderRadius.zero
+                        ),
+                      
+                        const SizedBox(height: 11,),
+                        Text(
+                          widget.product.description,
+                          textAlign: TextAlign.left,
+                        ),
+                        const SizedBox(height: 21,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {Navigator.of(context).pop();}, 
+                              style: ElevatedButton.styleFrom(
+                                shape: const RoundedRectangleBorder( 
+                                  borderRadius: BorderRadius.zero
+                                ),
+                                backgroundColor: Colors.red,
+                                foregroundColor: Colors.black,
                               ),
-                              backgroundColor: Colors.blue,
-                              foregroundColor: Colors.black,
+                              child: const Text('CLOSE')
                             ),
-                            child: const Text('ADD TO CART')
-                          ),
-                          
-                        ],
-                      )
+                            ElevatedButton(
+                              onPressed: shopProvider.isInCart(widget.product) ?  null : () => shopProvider.addToCart(widget.product), 
+                              style: ElevatedButton.styleFrom(
+                                shape: const RoundedRectangleBorder( 
+                                  borderRadius: BorderRadius.zero
+                                ),
+                                backgroundColor: Colors.blue,
+                                foregroundColor: Colors.black,
+                              ),
+                              child: const Text('ADD TO CART')
+                            ),
+                            
+                          ],
+                        )
                      
                   ]
                 ));
