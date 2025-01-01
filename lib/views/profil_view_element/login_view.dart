@@ -4,7 +4,7 @@ import 'package:task_management/models/cart_item.dart';
 import 'package:task_management/models/product.dart';
 import 'package:task_management/models/user.dart';
 import 'package:task_management/models/user_session.dart';
-import 'package:task_management/utils/shop_provider.dart';
+import 'package:task_management/utils/functions/shop_provider.dart';
 import '../../controllers/authentification.dart';
 
 class LoginView extends StatefulWidget {

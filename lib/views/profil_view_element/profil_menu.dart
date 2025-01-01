@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:task_management/models/user_session.dart';
-import 'package:task_management/utils/shop_provider.dart';
+import 'package:task_management/utils/functions/shop_provider.dart';
 import 'package:task_management/views/profil_view_element/login_view.dart';
 
 class ProfilMenu extends StatelessWidget {

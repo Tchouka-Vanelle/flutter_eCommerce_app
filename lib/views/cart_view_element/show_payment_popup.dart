@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:task_management/models/product.dart';
-import 'package:task_management/utils/shop_provider.dart';
+import 'package:task_management/utils/functions/shop_provider.dart';
 
 class ShowPaymentPopup extends StatefulWidget{
   const ShowPaymentPopup({super.key, required this.selectedProduct});

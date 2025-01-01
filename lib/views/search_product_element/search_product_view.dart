@@ -25,6 +25,10 @@ class _SearchProductViewState extends State<SearchProductView> {
     Product(id: 4, description: 'description4 lolipop', price: 29.0, images: ['coat'],  name: 'pull', nbrAchat: 11),
     Product(id: 5, description: 'description5', price: 33.0, images: ['robe'], name: 'tshirt', nbrAchat: 7),
     Product(id: 6, description: 'description6', price: 41.0, images: ['coat'], name: 'jupe', nbrAchat: 7),
+    Product(id: 7, description: 'description7 kal lpzpz pp', price: 64.0, images: ['robe'], name: 'iphone', nbrAchat: 4),
+    Product(id: 8, description: 'description8 lolipop', price: 37.0, images: ['coat'],  name: 'kitchen appliances', nbrAchat: 2),
+    Product(id: 9, description: 'description9', price: 5.0, images: ['robe'], name: 'stick', nbrAchat: 26),
+   
   ];
 
   void searchEntry(String searchValue) {

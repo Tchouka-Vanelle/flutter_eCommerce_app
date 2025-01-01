@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:task_management/views/cart_view_element/cart_view.dart';
 import 'package:task_management/views/favorite_view_element/favorite_view.dart';
 import 'package:task_management/views/home_view_element/home_view.dart';
-import 'package:task_management/utils/nav_bar_app.dart';
+import 'package:task_management/views/structure_project_element/nav_bar_app.dart';
 import 'package:task_management/views/profil_view_element/profil_menu.dart';
 import 'package:task_management/views/search_product_element/search_product_view.dart';
 

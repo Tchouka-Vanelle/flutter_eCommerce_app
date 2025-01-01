@@ -1,14 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:task_management/models/product.dart';
+import 'package:task_management/utils/functions/perform_search.dart';
+import 'package:task_management/utils/functions/product_provider.dart';
 
-class SearchSection extends StatelessWidget {
-  SearchSection({super.key, required this.searchEntry});
-  final Function(String) searchEntry;
+class SearchSection extends StatefulWidget {
+  const SearchSection({super.key});
 
+  @override
+  State<SearchSection> createState() => _SearchSectionState();
+}
+
+class _SearchSectionState extends State<SearchSection> {
   final TextEditingController _searchController = TextEditingController();
+  
+  List<Product> productToDisplay = [];
+ 
 
   @override
   Widget build(BuildContext context) {
    
+   final productProvider = Provider.of<ProductProvider>(context);
+
    return Row(
     children: [ 
       Expanded(
@@ -23,12 +36,16 @@ class SearchSection extends StatelessWidget {
             ),
             prefixIcon: const Icon(Icons.search)
           ),
-          onSubmitted: (value) => searchEntry(value),
+          onSubmitted: (value) => {
+            setState(() {
+              productToDisplay = performSearch(value, productProvider);
+            })
+          },
         ),
       ),
       const SizedBox(width: 5),
       ElevatedButton(
-        onPressed: () {searchEntry(_searchController.text);},
+        onPressed: () {performSearch(_searchController.text, productProvider);},
         style: ElevatedButton.styleFrom( 
           shape: RoundedRectangleBorder( 
             borderRadius: BorderRadius.circular(27),
@@ -40,5 +57,4 @@ class SearchSection extends StatelessWidget {
     ],
    );
   }
-
 }

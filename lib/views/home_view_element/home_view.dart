@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:task_management/models/product.dart';
 import 'package:task_management/models/category.dart';
+import 'package:task_management/models/product_category.dart';
+import 'package:task_management/utils/functions/perform_search.dart';
+import 'package:task_management/utils/functions/product_provider.dart';
+import 'package:task_management/utils/functions/shop_provider.dart';
 import 'package:task_management/views/home_view_element/recently%20consulted_section.dart';
 import 'package:task_management/views/home_view_element/home_section_format.dart';
 import 'package:task_management/views/home_view_element/search_section.dart';
@@ -45,24 +50,34 @@ class _HomeViewState extends State<HomeView> {
     Product(description: 'description6', price: 18.0, images: ['coat'], id: 2, name: 'jupe', nbrAchat: 7),
   ];
   List<Category> shopByCategory = [
-    Category(name: "category1", photo: "robe"),
-    Category(name: "category2", photo: "coat"),
-    Category(name: "category3", photo: "robe"),
-    Category(name: "category4", photo: "coat"),
-    Category(name: "category5", photo: "robe"),
-    Category(name: "category6", photo: "coat"),
-    Category(name: "category7", photo: "robe"),
-    Category(name: "category8", photo: "coat"),
-    Category(name: "category9", photo: "robe"),
+    Category(id: 1, name: "category1", photo: "robe"),
+    Category(id: 2, name: "category2", photo: "coat"),
+    Category(id: 3, name: "category3", photo: "robe"),
+    Category(id: 4, name: "category4", photo: "coat"),
+    Category(id: 5, name: "category5", photo: "robe"),
+    Category(id: 6, name: "category6", photo: "coat"),
+    Category(id: 7, name: "category7", photo: "robe"),
+    Category(id: 8, name: "category8", photo: "coat"),
   ];
 
-  void searchEntry(String searchValue) {
-    setState((){this.searchValue = searchValue;});
-  }
+  List<ProductCategory> productCategory = [
+    ProductCategory(idCategory: 1, idProduct: 5),
+    ProductCategory(idCategory: 1, idProduct: 3),
+    ProductCategory(idCategory: 3, idProduct: 1),
+    ProductCategory(idCategory: 3, idProduct: 2),
+    ProductCategory(idCategory: 3, idProduct: 6),
+    ProductCategory(idCategory: 4, idProduct: 4),
+    ProductCategory(idCategory: 4, idProduct: 6),
+    ProductCategory(idCategory: 4, idProduct: 1),
+  ];
+
 
   @override
   Widget build(BuildContext context) {
     
+    final shopProvider = Provider.of<ShopProvider>(context);
+    final productProvider = Provider.of<ProductProvider>(context);
+
     return Padding( 
       padding: const EdgeInsets.all(7),
      
@@ -70,7 +85,7 @@ class _HomeViewState extends State<HomeView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Row(),
-            SearchSection(searchEntry: searchEntry),
+            const SearchSection(),
             const SizedBox(height: 20),
 
             Expanded(
@@ -110,9 +125,8 @@ class _HomeViewState extends State<HomeView> {
                   
                 ],
               )
-                         
                         
-                      ),
+              ),
             )
           ]
         )

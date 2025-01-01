@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:task_management/models/product.dart';
+import 'package:task_management/utils/components/show_product_details.dart';
 
 class HomeSectionFormat extends StatelessWidget {
   const HomeSectionFormat({super.key, required this.value, required this.name});
@@ -47,9 +48,19 @@ class HomeSectionFormat extends StatelessWidget {
                           child: IntrinsicWidth(
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [ 
-                                Image(image: AssetImage('assets/product_images/${e.images[0]}.png'),
+                              children: [
+                                GestureDetector(
+                                onTap: () {
+                                  showDialog( 
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return  ShowProductDetails(product: e);
+                                    },
+                                  );
+                                },
+                                child: Image(image: AssetImage('assets/product_images/${e.images[0]}.png'),
                                       width: 30,  height: 30,),
+                                ),
                                 const SizedBox(width: 4),
                                 Text(e.name,),
                               ],
