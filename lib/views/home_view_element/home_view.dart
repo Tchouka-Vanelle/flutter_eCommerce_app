@@ -65,47 +65,59 @@ class _HomeViewState extends State<HomeView> {
     
     return Padding( 
       padding: const EdgeInsets.all(7),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
+     
         child: Column( 
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Row(),
             SearchSection(searchEntry: searchEntry),
             const SizedBox(height: 20),
-            RecentlyConsultedSection(recentlyConsulted: recentlyConsulted),
-            const SizedBox(height: 25),
 
-            HomeSectionFormat(value: saisonalSuggestion, name : "Saisonal Suggestion"),
-            const SizedBox(height: 10),
-            Divider( 
-              color: Colors.grey[110],
-              thickness: 1,
-
-            ),
-            const SizedBox(height: 25),
-            HomeSectionFormat(value: bestSelling, name : "Best Selling"),
-            const SizedBox(height: 10),
-            Divider( 
-              color: Colors.grey[110],
-              thickness: 1,
-
-            ),
-            const SizedBox(height: 25),
-            HomeSectionFormat(value: news, name : "News"),
-            const SizedBox(height: 10),
-            Divider( 
-              color: Colors.grey[110],
-              thickness: 1,
-
-            ),
-            const SizedBox(height: 10),
-            ShopByCategory(shopByCategory: shopByCategory),
-            const SizedBox(height: 25,),
-            
-          ],
-        ),
-      )
+            Expanded(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(children: [
+              
+                  RecentlyConsultedSection(recentlyConsulted: recentlyConsulted),
+                  const SizedBox(height: 25),
+              
+                  HomeSectionFormat(value: saisonalSuggestion, name : "Saisonal Suggestion"),
+                  const SizedBox(height: 10),
+                  Divider( 
+                    color: Colors.grey[110],
+                    thickness: 1,
+              
+                  ),
+                  const SizedBox(height: 25),
+                  HomeSectionFormat(value: bestSelling, name : "Best Selling"),
+                  const SizedBox(height: 10),
+                  Divider( 
+                    color: Colors.grey[110],
+                    thickness: 1,
+              
+                  ),
+                  const SizedBox(height: 25),
+                  HomeSectionFormat(value: news, name : "News"),
+                  const SizedBox(height: 10),
+                  Divider( 
+                    color: Colors.grey[110],
+                    thickness: 1,
+              
+                  ),
+                  const SizedBox(height: 10),
+                  ShopByCategory(shopByCategory: shopByCategory),
+                  const SizedBox(height: 25,),
+                  
+                ],
+              )
+                         
+                        
+                      ),
+            )
+          ]
+        )
     );
-  }
+          
+  }       
+
 }

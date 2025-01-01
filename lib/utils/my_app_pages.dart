@@ -15,7 +15,7 @@ class MyAppPages extends StatefulWidget {
 
 class _MyAppPagesState extends State<MyAppPages> {
 
-  int page = 1;
+  int page = 0;
   void onTabSelected(int val) => setState(() {page = val;});
 
   // list of pages
