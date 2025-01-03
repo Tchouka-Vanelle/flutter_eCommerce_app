@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:task_management/models/category.dart';
+import 'package:task_management/models/search_product_arguments.dart';
+import 'package:task_management/utils/functions/perform_search.dart';
+import 'package:task_management/utils/functions/product_provider.dart';
 
 class ShopByCategory extends StatelessWidget {
   const ShopByCategory({super.key, required this.shopByCategory});
@@ -9,6 +13,9 @@ class ShopByCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     
+    
+    final productProvider = Provider.of<ProductProvider>(context);
+
      return Column( 
       mainAxisAlignment: MainAxisAlignment.start,
       children: [ 
@@ -48,14 +55,21 @@ class ShopByCategory extends StatelessWidget {
                       child: SizedBox(
                         height: 40,
                         child: IntrinsicWidth(
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [ 
-                              Image(image: AssetImage('assets/product_images/${e.photo}.png'),
-                                    width: 40,  height: 40,),
-                              const SizedBox(width: 7),
-                              Text(e.name,)
-                            ],
+                          child:   GestureDetector(
+                                  onTap: () {
+                                      Navigator.of(context).pushNamed('/search_product_view', 
+                                      arguments: SearchProductArguments(page: 1, initialProductToDisplay: performSearch(e.name, productProvider))
+                                    );
+                                  },
+                                  child:  Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [ 
+                                      Image(image: AssetImage('assets/product_images/${e.photo}.png'),
+                                            width: 40,  height: 40,),
+                                      const SizedBox(width: 7),
+                                      Text(e.name,)
+                                    ],
+                                  )
                           )
                         )
                       )

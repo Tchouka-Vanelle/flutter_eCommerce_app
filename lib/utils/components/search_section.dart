@@ -5,7 +5,9 @@ import 'package:task_management/utils/functions/perform_search.dart';
 import 'package:task_management/utils/functions/product_provider.dart';
 
 class SearchSection extends StatefulWidget {
-  const SearchSection({super.key});
+  const SearchSection({super.key, required this.searchEntry});
+
+  final void Function(List<Product> productToDisplay) searchEntry;
 
   @override
   State<SearchSection> createState() => _SearchSectionState();
@@ -14,9 +16,7 @@ class SearchSection extends StatefulWidget {
 class _SearchSectionState extends State<SearchSection> {
   final TextEditingController _searchController = TextEditingController();
   
-  List<Product> productToDisplay = [];
- 
-
+  
   @override
   Widget build(BuildContext context) {
    
@@ -38,7 +38,7 @@ class _SearchSectionState extends State<SearchSection> {
           ),
           onSubmitted: (value) => {
             setState(() {
-              productToDisplay = performSearch(value, productProvider);
+              widget.searchEntry(performSearch(value, productProvider));
             })
           },
         ),

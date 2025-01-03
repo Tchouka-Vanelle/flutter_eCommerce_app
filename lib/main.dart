@@ -3,6 +3,7 @@ import 'package:task_management/models/cart_item.dart';
 import 'package:task_management/models/category.dart';
 import 'package:task_management/models/product.dart';
 import 'package:task_management/models/product_category.dart';
+import 'package:task_management/models/search_product_arguments.dart';
 import 'package:task_management/models/user_session.dart';
 import 'package:task_management/utils/functions/product_provider.dart';
 import 'package:task_management/views/structure_project_element/my_app_pages.dart';
@@ -106,7 +107,8 @@ void main() async{
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => shopProvider)
+        ChangeNotifierProvider(create: (_) => shopProvider),
+        ChangeNotifierProvider(create: (_) => productProvider)
       ],
       child: MyApp(isLoggedIn: session.isLoggedIn)
     )
@@ -130,9 +132,29 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/pages': (context) => const MyAppPages()
+        '/pages': (context) => const MyAppPages(page: 0, initialProductToDisplay: []),
+        
       },
-      home: isLoggedIn == true ?  const MyAppPages() : const LoginView(),
+      onGenerateRoute: (settings) {
+
+        if (settings.name == '/search_product_view') {
+          final args = settings.arguments;
+          
+          // Vérifiez si les arguments ne sont pas null avant de les caster
+          if (args != null && args is SearchProductArguments) {
+            return MaterialPageRoute(
+              builder: (context) => MyAppPages(
+                page: args.page,
+                initialProductToDisplay: args.initialProductToDisplay
+              )
+            );
+          }
+        }
+        return MaterialPageRoute(
+            builder: (context) => const LoginView()
+        );
+      },
+      home: isLoggedIn == true ?  const MyAppPages(page: 0, initialProductToDisplay: [],) : const LoginView(),
     );
   }
 }

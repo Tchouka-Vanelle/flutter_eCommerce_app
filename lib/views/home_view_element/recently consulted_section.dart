@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:task_management/models/search_product_arguments.dart';
+import 'package:task_management/utils/functions/perform_search.dart';
+import 'package:task_management/utils/functions/product_provider.dart';
 
 class RecentlyConsultedSection extends StatelessWidget {
 
@@ -8,6 +12,8 @@ class RecentlyConsultedSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     
+    final productProvider = Provider.of<ProductProvider>(context);
+
     return  Column( 
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,7 +42,14 @@ class RecentlyConsultedSection extends StatelessWidget {
                         color: Colors.grey[200],
                         borderRadius: BorderRadius.circular(14)
                       ),
-                      child: Text(e, style: const TextStyle(fontSize: 16)),
+                      child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pushNamed('/search_product_view', 
+                                  arguments: SearchProductArguments(page: 1, initialProductToDisplay: performSearch(e, productProvider))
+                              );
+                            },
+                            child: Text(e, style: const TextStyle(fontSize: 16))
+                      )
                     )
                   )).toList(),
               )
