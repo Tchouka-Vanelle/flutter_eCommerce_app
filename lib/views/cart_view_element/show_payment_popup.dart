@@ -4,9 +4,10 @@ import 'package:task_management/models/product.dart';
 import 'package:task_management/utils/functions/shop_provider.dart';
 
 class ShowPaymentPopup extends StatefulWidget{
-  const ShowPaymentPopup({super.key, required this.selectedProduct});
+  const ShowPaymentPopup({super.key, required this.selectedProduct, required this.resetSelectedProducts});
 
   final List<Product> selectedProduct;
+  final Function  resetSelectedProducts;
 
   @override
   State<ShowPaymentPopup> createState() => _ShowPaymentPopupState();
@@ -148,6 +149,7 @@ class _ShowPaymentPopupState extends State<ShowPaymentPopup> {
                     )
                   );
                 } else {
+                  widget.resetSelectedProducts();
                   Navigator.of(context).pop();
                   widget.selectedProduct.forEach(shopProvider.removeFromCart);
                 }
@@ -160,7 +162,7 @@ class _ShowPaymentPopupState extends State<ShowPaymentPopup> {
                 backgroundColor: Colors.blue,
                 foregroundColor: Colors.black,
               ),
-              child: const Text('CONFIRM 😊')
+              child: const Text('CONFIRM')
             ),
           ],
         ),

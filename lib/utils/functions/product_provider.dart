@@ -25,7 +25,13 @@ class ProductProvider extends ChangeNotifier {
   set recentlyConsulted(List<String> value) {
     _recentlyConsulted = value;
     notifyListeners();
+  } 
+  void addRecentlyConsulted(String value) {
+    _recentlyConsulted.add(value);
+    notifyListeners();
   }
+
+
 
   List<Product> get seasonSuggestion => _saisonalSuggestion;
   set seasonSuggestion(List<Product> value) {

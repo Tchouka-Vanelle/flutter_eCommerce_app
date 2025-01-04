@@ -24,14 +24,14 @@ void main() async{
     // Reloads data if the user is logged in
     if (session.isLoggedIn) {
        shopProvider.favItems = [
-        Product(id: 1, description: 'description1 oi zkzks  n,kpq^dl qskdp jjjjjjjj kkkkkkk o nnkkk llll ppppp eeeee ttt y y m zz eer zzzz eedd eer zzz zzz ee eee pppp jjj hhhh fder', price: 14.0, images: ['robe', 'coat', 'robe', 'coat'], name: 'robe', nbrAchat: 18),
+        Product(id: 1, description: 'description1 oi zkzks  n,kpq^dl qskdp jjjjjjjj kkkkkkk o nnkkk llll ppppp eeeee ttt y y m zz eer zzzz eedd eer zzz zzz ee eee pppp jjj hhhh fder', price: 14.0, images: ['dress1', 'dress2', 'dress3', 'dress4'], name: 'dress', nbrAchat: 18),
         Product(id: 2, description: 'description2', price: 18.0, images: ['coat'], name: 'coattttttttttttttttttttttttttttt tttttttttt', nbrAchat: 15),
-        Product(id: 6, description: 'description6', price: 41.0, images: ['coat'], name: 'jupe', nbrAchat: 7),
+        Product(id: 6, description: 'description6', price: 41.0, images: ['bag'], name: 'bag', nbrAchat: 7),
       ];
       var cartItems = [
-        Product(id: 1, description: 'description1 oi zkzks  n,kpq^dl qskdp jjjjjjjj kkkkkkk o nnkkk llll ppppp eeeee ttt y y m zz eer zzzz eedd eer zzz zzz ee eee pppp jjj hhhh fder', price: 14.0, images: ['robe', 'coat', 'robe', 'coat'], name: 'robe', nbrAchat: 18),
-        Product(id: 3, description: 'description3 kal lpzpz pp', price: 24.0, images: ['robe'], name: 'pantalon', nbrAchat: 14),
-        Product(id: 4, description: 'description4 lolipop', price: 29.0, images: ['coat'],  name: 'pull', nbrAchat: 11),
+        Product(id: 1, description: 'description1 oi zkzks  n,kpq^dl qskdp jjjjjjjj kkkkkkk o nnkkk llll ppppp eeeee ttt y y m zz eer zzzz eedd eer zzz zzz ee eee pppp jjj hhhh fder', price: 14.0, images: ['dress1', 'dress2', 'dress3', 'dress4'], name: 'dress', nbrAchat: 18),
+        Product(id: 3, description: 'description3 kal lpzpz pp', price: 24.0, images: ['pant'], name: 'pant', nbrAchat: 14),
+        Product(id: 4, description: 'description4 lolipop', price: 29.0, images: ['sweater'],  name: 'sweater', nbrAchat: 11),
       ];
       var cartItemList = cartItems.map((product) => CartItem(product: product, quantity: 1)).toList();
       shopProvider.cartItems = cartItemList;
@@ -41,68 +41,59 @@ void main() async{
 
     productProvider.allProducts = [
       
-      Product(id: 1, description: 'description1 oi zkzks  n,kpq^dl qskdp jjjjjjjj kkkkkkk o nnkkk llll ppppp eeeee ttt y y m zz eer zzzz eedd eer zzz zzz ee eee pppp jjj hhhh fder', price: 14.0, images: ['robe', 'coat', 'robe', 'coat'], name: 'robe', nbrAchat: 18),
+      Product(id: 1, description: 'description1 oi zkzks  n,kpq^dl qskdp jjjjjjjj kkkkkkk o nnkkk llll ppppp eeeee ttt y y m zz eer zzzz eedd eer zzz zzz ee eee pppp jjj hhhh fder', price: 14.0, images: ['dress1', 'dress2', 'dress3', 'dress4'], name: 'dress', nbrAchat: 18),
       Product(id: 2, description: 'description2', price: 18.0, images: ['coat'], name: 'coattttttttttttttttttttttttttttt tttttttttt', nbrAchat: 15),
-      Product(id: 3, description: 'description3 kal lpzpz pp', price: 24.0, images: ['robe'], name: 'pantalon', nbrAchat: 14),
-      Product(id: 4, description: 'description4 lolipop', price: 29.0, images: ['coat'],  name: 'pull', nbrAchat: 11),
-      Product(id: 5, description: 'description5', price: 33.0, images: ['robe'], name: 'tshirt', nbrAchat: 7),
-      Product(id: 6, description: 'description6', price: 41.0, images: ['coat'], name: 'jupe', nbrAchat: 7),
-      Product(id: 7, description: 'description7 kal lpzpz pp', price: 64.0, images: ['robe'], name: 'iphone', nbrAchat: 4),
-      Product(id: 8, description: 'description8 lolipop', price: 37.0, images: ['coat'],  name: 'kitchen appliances', nbrAchat: 2),
-      Product(id: 9, description: 'description9', price: 5.0, images: ['robe'], name: 'stick', nbrAchat: 26),
+      Product(id: 3, description: 'description3 kal lpzpz pp', price: 24.0, images: ['pant'], name: 'pant', nbrAchat: 14),
+      Product(id: 4, description: 'description4 lolipop', price: 29.0, images: ['sweater'],  name: 'sweater', nbrAchat: 11),
+      Product(id: 5, description: 'description5', price: 33.0, images: ['tshirt'], name: 'tshirt', nbrAchat: 7),
+      Product(id: 6, description: 'description6', price: 41.0, images: ['bag'], name: 'bag', nbrAchat: 7),
+      Product(id: 7, description: 'description7 kal lpzpz pp', price: 64.0, images: ['iphone'], name: 'iphone', nbrAchat: 4),
+      Product(id: 8, description: 'description8 lolipop', price: 37.0, images: ['oven'],  name: 'oven appliances', nbrAchat: 2),
+      Product(id: 9, description: 'description9', price: 5.0, images: ['earrings'], name: 'earrings', nbrAchat: 26),
+      Product(id: 10, description: 'description10', price: 26.0, images: ['blender'], name: 'blender', nbrAchat: 36),
    
     ];
 
-    productProvider.recentlyConsulted = [
-      'Kitchen appliances', 'Iphone 14 promax', 'Headphone',
-      'High heels', 'T-Shirt', 'Light stick',
-    ];
+    productProvider.recentlyConsulted = [];
 
     productProvider.seasonSuggestion = [
-      Product(id: 3, description: 'description3 kal lpzpz pp', price: 24.0, images: ['robe'], name: 'pantalon', nbrAchat: 14),
-      Product(id: 4, description: 'description4 lolipop', price: 29.0, images: ['coat'],  name: 'pull', nbrAchat: 11),
-      Product(id: 5, description: 'description5', price: 33.0, images: ['robe'], name: 'tshirt', nbrAchat: 7),
-   
+      Product(id: 1, description: 'description1 oi zkzks  n,kpq^dl qskdp jjjjjjjj kkkkkkk o nnkkk llll ppppp eeeee ttt y y m zz eer zzzz eedd eer zzz zzz ee eee pppp jjj hhhh fder', price: 14.0, images: ['dress1', 'dress2', 'dress3', 'dress4'], name: 'dress', nbrAchat: 18),
+      Product(id: 3, description: 'description3 kal lpzpz pp', price: 24.0, images: ['pant'], name: 'pant', nbrAchat: 14),
+      Product(id: 4, description: 'description4 lolipop', price: 29.0, images: ['sweater'],  name: 'sweater', nbrAchat: 11),
+      Product(id: 5, description: 'description5', price: 33.0, images: ['tshirt'], name: 'tshirt', nbrAchat: 7),
     ];
 
     productProvider.bestSelling = [
-      Product(id: 9, description: 'description9', price: 5.0, images: ['robe'], name: 'tshirt', nbrAchat: 26),
-      Product(id: 3, description: 'description3 kal lpzpz pp', price: 24.0, images: ['robe'], name: 'pantalon', nbrAchat: 14),
+      Product(id: 9, description: 'description9', price: 5.0, images: ['earrings'], name: 'earrings', nbrAchat: 26),
+      Product(id: 10, description: 'description10', price: 26.0, images: ['blender'], name: 'blender', nbrAchat: 36),
     ];
 
     productProvider.news = [
-      Product(id: 7, description: 'description7 kal lpzpz pp', price: 64.0, images: ['robe'], name: 'iphone', nbrAchat: 4),
-      Product(id: 5, description: 'description5', price: 33.0, images: ['robe'], name: 'tshirt', nbrAchat: 7),
-      Product(id: 8, description: 'description8 lolipop', price: 37.0, images: ['coat'],  name: 'kitchen appliances', nbrAchat: 2),
+      Product(id: 7, description: 'description7 kal lpzpz pp', price: 64.0, images: ['iphone'], name: 'iphone', nbrAchat: 4),
+      Product(id: 8, description: 'description8 lolipop', price: 37.0, images: ['oven'],  name: 'oven appliances', nbrAchat: 2),
     ];
 
     productProvider.categories = [
       
-      Category(id: 1, name: "category1", photo: "robe"),
-      Category(id: 2, name: "category2", photo: "coat"),
-      Category(id: 3, name: "category3", photo: "robe"),
-      Category(id: 4, name: "category4", photo: "coat"),
-      Category(id: 5, name: "category5", photo: "robe"),
-      Category(id: 6, name: "category6", photo: "coat"),
-      Category(id: 7, name: "category7", photo: "robe"),
-      Category(id: 8, name: "category8", photo: "coat"),
+      Category(id: 1, name: "clothes", photo: "clothes"),
+      Category(id: 2, name: "accessories", photo: "accessories"),
+      Category(id: 3, name: "telephone", photo: "telephone"),
+      Category(id: 4, name: "electro_menagers", photo: "electro_menagers"),
   
     ];
 
     productProvider.productCategory = [
       
-      ProductCategory(idCategory: 1, idProduct: 5),
+      ProductCategory(idCategory: 1, idProduct: 4),
       ProductCategory(idCategory: 1, idProduct: 3),
-      ProductCategory(idCategory: 3, idProduct: 1),
-      ProductCategory(idCategory: 3, idProduct: 2),
-      ProductCategory(idCategory: 3, idProduct: 6),
-      ProductCategory(idCategory: 4, idProduct: 4),
-      ProductCategory(idCategory: 4, idProduct: 6),
-      ProductCategory(idCategory: 4, idProduct: 1),
-      ProductCategory(idCategory: 7, idProduct: 7),
-      ProductCategory(idCategory: 8, idProduct: 8),
-      ProductCategory(idCategory: 8, idProduct: 9),
-      ProductCategory(idCategory: 8, idProduct: 5),
+      ProductCategory(idCategory: 1, idProduct: 1),
+      ProductCategory(idCategory: 1, idProduct: 2),
+      ProductCategory(idCategory: 1, idProduct: 5),
+      ProductCategory(idCategory: 2, idProduct: 9),
+      ProductCategory(idCategory: 2, idProduct: 6),
+      ProductCategory(idCategory: 3, idProduct: 7),
+      ProductCategory(idCategory: 4, idProduct: 8),
+      ProductCategory(idCategory: 4, idProduct: 10),
   
     ];
 

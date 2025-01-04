@@ -34,11 +34,12 @@ class _SearchSectionState extends State<SearchSection> {
             ),
             prefixIcon: const Icon(Icons.search)
           ),
-          onSubmitted: (value) => {
+          onSubmitted: (value) {
               Navigator.of(context).pushNamed('/search_product_view', 
-              arguments: SearchProductArguments(page: 1, initialProductToDisplay: performSearch(value, productProvider)))
+              arguments: SearchProductArguments(page: 1, initialProductToDisplay: performSearch(value, productProvider))
+              );
           
-            
+              productProvider.addRecentlyConsulted(value);  
             
           },
         ),

@@ -13,7 +13,6 @@ class ShopByCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     
-    
     final productProvider = Provider.of<ProductProvider>(context);
 
      return Column( 

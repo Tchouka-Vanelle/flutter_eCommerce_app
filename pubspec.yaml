@@ -41,6 +41,11 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  test: ^1.17.0 # for unitaire test
+
+  integration_test: 
+    sdk: flutter
+  mockito: ^5.0.0
 
   flutter_lints: ^4.0.0
 

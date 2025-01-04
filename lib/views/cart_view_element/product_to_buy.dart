@@ -35,6 +35,12 @@ class _ProductToBuyState extends State<ProductToBuy> {
             .map((entry) => entry.value.product)
             .toList();
 
+  void resetSelectedProducts() {
+    setState(() {
+      _isChecked = List<bool>.filled(widget.productToBuy.length, false);
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -173,7 +179,7 @@ class _ProductToBuyState extends State<ProductToBuy> {
                           showDialog( 
                             context: context,
                             builder: (BuildContext context) {
-                              return ShowPaymentPopup(selectedProduct: _selectedProduct);
+                              return ShowPaymentPopup(selectedProduct: _selectedProduct, resetSelectedProducts: resetSelectedProducts);
                             },
                           );
                         } : null, 

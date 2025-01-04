@@ -1,30 +1,27 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:task_management/main.dart';
-
+import 'package:provider/provider.dart';
+import 'package:task_management/utils/functions/shop_provider.dart';
+import 'package:task_management/views/profil_view_element/login_view.dart';
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp(isLoggedIn: true));
+  testWidgets('LoginView displays correct Widget', (WidgetTester tester) async {
+    // Create a mock ProductProvider with fake data
+    final mockShopProvider = ShopProvider();
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Build the widget tree with the mock provider
+    await tester.pumpWidget(
+      ChangeNotifierProvider.value(
+        value: mockShopProvider,
+        child:  const MaterialApp(home:  LoginView())
+        
+      ),
+    );
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    // Wait for the widget to render
+    await tester.pumpAndSettle();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Verify if the expected title is displayed on the HomeView
+    expect(find.byType(Scaffold), findsOneWidget); 
+    expect(find.byType(TextField), findsNWidgets(2)); 
   });
 }

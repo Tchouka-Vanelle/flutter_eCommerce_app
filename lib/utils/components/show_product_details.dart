@@ -59,9 +59,16 @@ class _ShowProductDetailsState extends State<ShowProductDetails> {
                               }, 
                               child: const Icon(Icons.arrow_left_rounded)
                             ),
-                            Image(
-                              image: AssetImage('assets/product_images/${widget.product.images[photo]}.png'),
-                              width: 150,  height: 150,
+                            ConstrainedBox(
+                              constraints: const BoxConstraints(
+                                maxWidth: 150,
+                                maxHeight: 150, 
+                              ),
+                              child: Image(
+                                image: AssetImage('assets/product_images/${widget.product.images[photo]}.png'),
+                                width: 150,  height: 150,
+                                fit: BoxFit.contain,
+                              ),
                             ),
                             TextButton(
                               onPressed: (){
