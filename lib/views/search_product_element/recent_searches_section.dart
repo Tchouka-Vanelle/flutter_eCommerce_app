@@ -29,7 +29,7 @@ class RecentSearchesSection extends StatelessWidget {
                     ),
                 ),
               IconButton(
-                  onPressed: (){}, 
+                  onPressed: (){productProvider.recentSearches = [];}, 
                   icon: const Icon(Icons.delete),
                   color: const Color.fromARGB(255, 26, 45, 91),
                 )

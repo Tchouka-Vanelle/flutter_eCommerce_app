@@ -34,10 +34,6 @@ class _SearchProductViewState extends State<SearchProductView> {
   }
 
   String? searchValue;
-  List<String> recentSearches = [
-    'Kitchen appliances', 'Iphone 14 promax', 'Headphone',
-    'High heels', 'T-Shirt', 'Light stick',
-  ];
  
   @override
   Widget build(BuildContext context) {
@@ -58,7 +54,7 @@ class _SearchProductViewState extends State<SearchProductView> {
                 scrollDirection: Axis.vertical,
               
                 child: Column(children: [
-                  RecentSearchesSection(recentSearches: recentSearches),
+                  RecentSearchesSection(recentSearches: productProvider.recentSearches),
                   const SizedBox(height: 25),
                   RecommendedForYouSection(recommendedForYou:
                    productProvider.bestSelling + productProvider.news + productProvider.seasonSuggestion
