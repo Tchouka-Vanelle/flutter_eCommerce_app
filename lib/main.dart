@@ -48,13 +48,15 @@ void main() async{
       Product(id: 5, description: 'description5', price: 33.0, images: ['tshirt'], name: 'tshirt', nbrAchat: 7),
       Product(id: 6, description: 'description6', price: 41.0, images: ['bag'], name: 'bag', nbrAchat: 7),
       Product(id: 7, description: 'description7 kal lpzpz pp', price: 64.0, images: ['iphone'], name: 'iphone', nbrAchat: 4),
-      Product(id: 8, description: 'description8 lolipop', price: 37.0, images: ['oven'],  name: 'oven appliances', nbrAchat: 2),
+      Product(id: 8, description: 'description8 lolipop', price: 37.0, images: ['oven'],  name: 'oven appliance', nbrAchat: 2),
       Product(id: 9, description: 'description9', price: 5.0, images: ['earrings'], name: 'earrings', nbrAchat: 26),
       Product(id: 10, description: 'description10', price: 26.0, images: ['blender'], name: 'blender', nbrAchat: 36),
    
     ];
 
-    productProvider.recentlyConsulted = [];
+    productProvider.recentSearches= [];
+
+    productProvider.recentlyConsulted = ['blender', 'bed', 'skirt', 'shoes', 'kitchen appliances'];
 
     productProvider.seasonSuggestion = [
       Product(id: 1, description: 'description1 oi zkzks  n,kpq^dl qskdp jjjjjjjj kkkkkkk o nnkkk llll ppppp eeeee ttt y y m zz eer zzzz eedd eer zzz zzz ee eee pppp jjj hhhh fder', price: 14.0, images: ['dress1', 'dress2', 'dress3', 'dress4'], name: 'dress', nbrAchat: 18),

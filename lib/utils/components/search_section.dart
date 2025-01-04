@@ -39,7 +39,7 @@ class _SearchSectionState extends State<SearchSection> {
               arguments: SearchProductArguments(page: 1, initialProductToDisplay: performSearch(value, productProvider))
               );
           
-              productProvider.addRecentlyConsulted(value);  
+              productProvider.addRecentlySearches(value);  
             
           },
         ),

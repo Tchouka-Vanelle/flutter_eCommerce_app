@@ -13,7 +13,7 @@ List<Product> performSearch(String searchValue, ProductProvider productProvider)
 
   // search in category
   List<Category> matchingCategories = productProvider.categories.where(
-    (category) { return category.name.toLowerCase().contains(searchValue); 
+    (category) { return category.name.toLowerCase().contains(searchValue.toLowerCase()); 
   }).toList();
 
   // Add products from corresponding categories
@@ -34,7 +34,7 @@ List<Product> performSearch(String searchValue, ProductProvider productProvider)
   // search in product
   List<Product> matchingProducts = allProducts.where(
     (p) {
-      return p.name.toLowerCase().contains(searchValue);
+      return p.name.toLowerCase().contains(searchValue.toLowerCase());
     } 
   ).toList();
 

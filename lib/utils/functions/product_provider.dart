@@ -9,6 +9,7 @@ class ProductProvider extends ChangeNotifier {
 
   List<Product> _allProducts = [];
   List<String> _recentlyConsulted = [];
+  List<String> _recentSearches = [];
   List<Product> _saisonalSuggestion = [];
   List<Product> _bestSelling = [];
   List<Product> _news = [];
@@ -26,12 +27,17 @@ class ProductProvider extends ChangeNotifier {
     _recentlyConsulted = value;
     notifyListeners();
   } 
-  void addRecentlyConsulted(String value) {
-    _recentlyConsulted.add(value);
+
+  List<String> get recentSearches => _recentSearches;
+  set recentSearches(List<String> value) {
+    _recentSearches = value;
+    notifyListeners();
+  } 
+    
+  void addRecentlySearches(String value) {
+    _recentSearches.add(value);
     notifyListeners();
   }
-
-
 
   List<Product> get seasonSuggestion => _saisonalSuggestion;
   set seasonSuggestion(List<Product> value) {

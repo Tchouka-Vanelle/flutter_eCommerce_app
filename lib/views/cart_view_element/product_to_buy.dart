@@ -73,7 +73,7 @@ class _ProductToBuyState extends State<ProductToBuy> {
                     physics: const NeverScrollableScrollPhysics(), // désactive le défilement interne
                     itemCount: widget.productToBuy.length,
                     itemBuilder: (context, index) {
-                      debugPrint('Building item at index $index: ${widget.productToBuy[index].product.name}');
+                     
                       return 
                         Card(
                           margin: const EdgeInsets.symmetric(vertical: 7, horizontal: 16),
