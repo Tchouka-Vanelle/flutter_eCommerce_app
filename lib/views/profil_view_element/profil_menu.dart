@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:task_management/models/user_session.dart';
+import 'package:task_management/utils/functions/product_provider.dart';
 import 'package:task_management/utils/functions/shop_provider.dart';
 import 'package:task_management/views/profil_view_element/login_view.dart';
 
@@ -8,12 +9,13 @@ class ProfilMenu extends StatelessWidget {
 
   const ProfilMenu({super.key});
 
-  Future<void> _logout(BuildContext context, ShopProvider shopProvider) async {
+  Future<void> _logout(BuildContext context, ShopProvider shopProvider, ProductProvider productProvider) async {
     final session = await UserSession.instance;
     
 
     await session.clearSession();
     shopProvider.clear();
+    productProvider.clear();
 
     if (context.mounted) {
       Navigator.pushReplacement(
@@ -27,6 +29,7 @@ class ProfilMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     
     final shopProvider = Provider.of<ShopProvider>(context);
+    final productProvider = Provider.of<ProductProvider>(context);
 
     return PopupMenuButton<String>(
       shape: RoundedRectangleBorder(
@@ -41,7 +44,7 @@ class ProfilMenu extends StatelessWidget {
             );
             break;
           case 'Logout':
-            _logout(context, shopProvider);
+            _logout(context, shopProvider, productProvider);
             break;
           }
       },

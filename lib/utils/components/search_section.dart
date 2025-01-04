@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:task_management/models/product.dart';
+import 'package:task_management/models/search_product_arguments.dart';
 import 'package:task_management/utils/functions/perform_search.dart';
 import 'package:task_management/utils/functions/product_provider.dart';
 
 class SearchSection extends StatefulWidget {
-  const SearchSection({super.key, required this.searchEntry});
-
-  final void Function(List<Product> productToDisplay) searchEntry;
+  const SearchSection({super.key});
 
   @override
   State<SearchSection> createState() => _SearchSectionState();
@@ -37,9 +35,11 @@ class _SearchSectionState extends State<SearchSection> {
             prefixIcon: const Icon(Icons.search)
           ),
           onSubmitted: (value) => {
-            setState(() {
-              widget.searchEntry(performSearch(value, productProvider));
-            })
+              Navigator.of(context).pushNamed('/search_product_view', 
+              arguments: SearchProductArguments(page: 1, initialProductToDisplay: performSearch(value, productProvider)))
+          
+            
+            
           },
         ),
       ),

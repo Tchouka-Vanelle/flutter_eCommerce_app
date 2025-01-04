@@ -51,28 +51,31 @@ class _SearchProductViewState extends State<SearchProductView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Row(),
-            SearchSection(searchEntry: searchEntry),
+            const SearchSection(),
             const SizedBox(height: 20),
-            SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-            
-              child: Column(children: [
-                RecentSearchesSection(recentSearches: recentSearches),
-                const SizedBox(height: 25),
-                RecommendedForYouSection(recommendedForYou:
-                 productProvider.bestSelling + productProvider.news + productProvider.seasonSuggestion
-                ),
-                const SizedBox(height: 10),
-                Divider( 
-                  color: Colors.grey[110],
-                  thickness: 1,
-            
-                ),
-                const SizedBox(height: 10),
-                
-                ProductList(productList: productToDisplay),
-                const SizedBox(height: 25,),
-              ],)
+            Expanded(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+              
+                child: Column(children: [
+                  RecentSearchesSection(recentSearches: recentSearches),
+                  const SizedBox(height: 25),
+                  RecommendedForYouSection(recommendedForYou:
+                   productProvider.bestSelling + productProvider.news + productProvider.seasonSuggestion
+                  ),
+                  const SizedBox(height: 10),
+                  Divider( 
+                    color: Colors.grey[110],
+                    thickness: 1,
+              
+                  ),
+                  const SizedBox(height: 10),
+                  
+                  ProductList(productList: productToDisplay),
+                   
+                  const SizedBox(height: 25,),
+                ],)
+              ),
             )
           ],
         ),

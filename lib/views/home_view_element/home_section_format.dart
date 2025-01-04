@@ -12,10 +12,11 @@ class HomeSectionFormat extends StatelessWidget {
 
     return  Column( 
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [ 
           Text( 
               name,
+              textAlign: TextAlign.center,
               style: const TextStyle( 
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -31,6 +32,7 @@ class HomeSectionFormat extends StatelessWidget {
                 child: Wrap(
                     spacing: 8, // horizontal space
                     runSpacing: 8, //vertical space
+                    runAlignment: WrapAlignment.start,
                     children: value.map((e) {
                         return Container( 
                         padding: const EdgeInsets.all(7),

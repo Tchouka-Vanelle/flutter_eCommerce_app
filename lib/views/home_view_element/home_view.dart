@@ -38,7 +38,7 @@ class _HomeViewState extends State<HomeView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Row(),
-            SearchSection(searchEntry: searchEntry),
+            const SearchSection(),
             const SizedBox(height: 20),
 
             Expanded(

@@ -34,10 +34,24 @@ List<Product> performSearch(String searchValue, ProductProvider productProvider)
   // search in product
   List<Product> matchingProducts = allProducts.where(
     (p) {
-      return p.name.toLowerCase().startsWith(searchValue);
+      return p.name.toLowerCase().contains(searchValue);
     } 
   ).toList();
-  searchResults.addAll(matchingProducts);
+
+  for (var pc in matchingProducts) {
+
+    int idCategpry = productProvider.productCategory.firstWhere((e) => e.idProduct == pc.id).idCategory;
+
+    List<ProductCategory> productsSameCategory = productProvider.productCategory.where(
+      (prod) => prod.idCategory == idCategpry
+    ).toList();
+
+    List<Product> products = productsSameCategory.map(
+      (e) => allProducts.firstWhere((p) => p.id == e.idProduct),
+    ).whereType<Product>().toList();
+
+    searchResults.addAll(products);
+  }
 
   if (searchResults.isEmpty) {
     searchResults.addAll(allProducts);

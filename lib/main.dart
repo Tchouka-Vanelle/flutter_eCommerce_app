@@ -99,6 +99,10 @@ void main() async{
       ProductCategory(idCategory: 4, idProduct: 4),
       ProductCategory(idCategory: 4, idProduct: 6),
       ProductCategory(idCategory: 4, idProduct: 1),
+      ProductCategory(idCategory: 7, idProduct: 7),
+      ProductCategory(idCategory: 8, idProduct: 8),
+      ProductCategory(idCategory: 8, idProduct: 9),
+      ProductCategory(idCategory: 8, idProduct: 5),
   
     ];
 

@@ -57,4 +57,15 @@ class ProductProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+   void clear() {
+    _allProducts.clear();
+    _bestSelling.clear();
+    _categories.clear();
+    _productCategory.clear();
+    _recentlyConsulted.clear();
+    _news.clear();
+    _saisonalSuggestion.clear();
+    notifyListeners();
+  }
+
 }
